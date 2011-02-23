@@ -1,0 +1,15 @@
+<stack>
+  <description brief="JKU_Robotic_Stack">JKU_Robotic_Stack</description>
+  <author>Maintained by aaronmr</author>
+  <license>BSD,LGPL,proprietary</license>  
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/JKU_Robotic_Stack</url>
+  <depend stack="common_msgs" /> <!-- nav_msgs, sensor_msgs, geometry_msgs -->
+  <depend stack="geometry" /> <!-- tf, angles -->
+  <depend stack="geometry_experimental" /> <!-- tf2 -->
+  <depend stack="joystick_drivers" /> <!-- joy -->
+  <depend stack="laser_pipeline" /> <!-- laser_geometry -->
+  <depend stack="ros" /> <!-- rospy, roscpp -->
+  <depend stack="ros_tutorials" /> <!-- turtlesim -->
+
+</stack>

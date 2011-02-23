@@ -1,0 +1,124 @@
+\documentclass[11pt,a4paper]{report}	% report - article
+\usepackage{graphicx}
+\usepackage{fancyhdr} 
+\usepackage{fancybox} 
+\usepackage{psfrag}
+\usepackage{boxedminipage} 
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}	%fr Sonderzeichen s. latin1
+\usepackage[latin1]{inputenc}   %fr Umlaute & scharfes s
+\usepackage{times}
+\usepackage{float}
+\usepackage{amsmath,amssymb}
+\usepackage[dvips, a4paper, raiselinks, breaklinks, colorlinks, bookmarks, bookmarksnumbered,citecolor = black, linkcolor = black]{hyperref}
+\usepackage{zardozDipl} 
+\usepackage{url}
+
+
+
+
+
+
+
+%
+%
+%\fancypagestyle{plain}{%
+%    \lhead{LaTeX - TeXnicCenter} %left head
+%    \rhead{Vorlage V2.0} % right head
+%    \lfoot{Institut fr Robotik}
+%    \rfoot{\thepage}
+%    \cfoot{}		%keine Seitenangabe zustzlich in der Mitte !!!
+%    \renewcommand{\headrulewidth}{0.4pt}
+%    \renewcommand{\footrulewidth}{0.4pt}
+%}
+%
+\pagestyle{plain}
+%
+\pagenumbering{arabic}
+%
+%\newtheorem{Aufgabe}{Aufgabe}[section]
+%\newtheorem{Hinweis}{Hinweis}[section]
+%
+%
+%\renewcommand{\chaptermark}[1]{}%   %shows chapter left header
+%     
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}{}}
+%
+\newcommand{\qu}{\symbol{94}}  %"^" !!!
+\newcommand{\MS}{MatLab/SimuLink }
+%
+%--------------------------------------------------
+%
+\setlength{\parindent}{0mm}
+
+
+
+
+\setcounter{section}{0}
+
+\begin{document}
+
+		\include{coversheet}
+
+		\pagestyle{zardoz}
+		
+		\textheight 24cm
+		\textwidth 16cm
+		\oddsidemargin 8mm
+		\topmargin -15mm
+		\headheight 1cm
+		\headsep 1cm
+
+
+		\pagenumbering{roman}
+		\setcounter{page}{1}
+		\tableofcontents																																   
+
+		%----------------------------------------------------------------------------------
+		%										 L I S T  O F  F I G U R E S                                   
+		%----------------------------------------------------------------------------------
+%		\listoffigures																																		 
+%		\addcontentsline{toc}{chapter}{List of Figures} 																	 
+
+		%----------------------------------------------------------------------------------
+		%										 L I S T  O F  T A B L E S                                     
+		%----------------------------------------------------------------------------------
+%		\listoftables																																		   
+%		\addcontentsline{toc}{chapter}{List of Tables}																		 
+
+		%----------------------------------------------------------------------------------
+		%										 C H A P T E R S                                               
+		%----------------------------------------------------------------------------------
+		\pagebreak
+		\pagenumbering{arabic}
+    \setcounter{page}{1}																										
+    	\chapter*{TODO}
+		\begin{verbatim}
+		* poner esquema de la placa de alimentacion del kinect, switch, conversor
+		* tutorial to do a new model using google SketchUP
+		* tutorial to make a new msgs and srv
+		* explain the teleop_joy and teleop_key
+		* explain the launch file
+		* explain the server and client
+		* make a diagram of all the system
+		* make a class diagram
+		* instalation driver canbus,
+		* scan manual for the configuration of 424 to 232 converser
+		* create a CD with all the code and models and documents
+		\end{verbatim}    
+    
+    		 
+		%\include{Chapter1}
+		%\include{Chapter2}
+		%\include{Chapter3}
+		%\include{Chapter4}
+		%\include{Chapter5}
+		%\include{Chapter6}
+		%\include{tutorials/tutorial_1/tutorial}
+		%\include{tutorials/tutorial_2/tutorial}
+		\include{tutorials/tutorial_3/tutorial}
+
+
+\end{document}
