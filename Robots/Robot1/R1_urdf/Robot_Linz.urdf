@@ -4,7 +4,7 @@
   <link name="base_link">
     <visual>
       <geometry>
-        <mesh  scale="0.025 0.025 0.025" filename="package://urdf_tutorial/bot_body.dae"/>
+        <mesh  scale="0.025 0.025 0.025" filename="package://R1_urdf/bot_body.dae"/>
       </geometry>
       <origin xyz="0 0 0.226"/>
     </visual>
@@ -33,7 +33,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh  scale="0.025 0.025 0.025" filename="package://urdf_tutorial/bot_kinect.dae"/>
+        <mesh  scale="0.025 0.025 0.025" filename="package://R1_urdf/bot_kinect.dae"/>
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0"/>
     </visual>
@@ -70,7 +70,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh  scale="0.025 0.025 0.025" filename="package://urdf_tutorial/bot_wheel.dae"/>
+        <mesh  scale="0.025 0.025 0.025" filename="package://R1_urdf/bot_wheel.dae"/>
       </geometry>
     </visual>
   </link>
@@ -86,7 +86,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh  scale="0.025 0.025 0.025" filename="package://urdf_tutorial/bot_wheel.dae"/>
+        <mesh  scale="0.025 0.025 0.025" filename="package://R1_urdf/bot_wheel.dae"/>
       </geometry>
     </visual>
   </link>
@@ -102,7 +102,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh  scale="0.025 0.025 0.025" filename="package://urdf_tutorial/bot_wheel.dae"/>
+        <mesh  scale="0.025 0.025 0.025" filename="package://R1_urdf/bot_wheel.dae"/>
       </geometry>
     </visual>
   </link>
@@ -118,7 +118,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh  scale="0.025 0.025 0.025" filename="package://urdf_tutorial/bot_wheel.dae"/>
+        <mesh  scale="0.025 0.025 0.025" filename="package://R1_urdf/bot_wheel.dae"/>
       </geometry>
     </visual>
   </link>
@@ -134,7 +134,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh  scale="0.025 0.025 0.025" filename="package://urdf_tutorial/bot_PLS200.dae"/>
+        <mesh  scale="0.025 0.025 0.025" filename="package://R1_urdf/bot_PLS200.dae"/>
       </geometry>
     </visual>
   </link>

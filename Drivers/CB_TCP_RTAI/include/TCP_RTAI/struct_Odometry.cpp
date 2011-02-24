@@ -333,7 +333,7 @@ int struct_Odometry::Unserialize(char* data2us)
         odometry_msg.pose.pose.orientation.x = auxUnSerialize.pose.pose.orientation.x;
         odometry_msg.pose.pose.orientation.y = auxUnSerialize.pose.pose.orientation.y;
         odometry_msg.pose.pose.orientation.z = auxUnSerialize.pose.pose.orientation.z;
-        odometry_msg.pose.pose.orientation.z = auxUnSerialize.pose.pose.orientation.w;
+        odometry_msg.pose.pose.orientation.w = auxUnSerialize.pose.pose.orientation.w;
 
         odometry_msg.twist.twist.angular.x = auxUnSerialize.twist.twist.angular.x;
         odometry_msg.twist.twist.angular.y = auxUnSerialize.twist.twist.angular.y;

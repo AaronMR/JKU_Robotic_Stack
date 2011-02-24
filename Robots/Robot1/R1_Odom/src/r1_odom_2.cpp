@@ -119,7 +119,6 @@ pose.orientation.w = 0.0;
     nav_msgs::Odometry odom;
     odom.header.stamp = current_time;
     odom.header.frame_id = "odom";
-    odom.child_frame_id = "base_link";
 
     //set the position
     odom.pose.pose.position.x = odom_2.pose.pose.position.x; //x;
@@ -127,9 +126,9 @@ pose.orientation.w = 0.0;
     odom.pose.pose.position.z = 0.0;
 
 //    odom.pose.pose.orientation = odom_quat;
-    odom.pose.pose.orientation.x = odom_2.pose.pose.orientation.z;
+    odom.pose.pose.orientation.x = odom_2.pose.pose.orientation.x;
     odom.pose.pose.orientation.y = odom_2.pose.pose.orientation.y;
-    odom.pose.pose.orientation.z = odom_2.pose.pose.orientation.x;
+    odom.pose.pose.orientation.z = odom_2.pose.pose.orientation.z;
     odom.pose.pose.orientation.w = odom_2.pose.pose.orientation.w;
 
     //set the velocity

@@ -1,0 +1,231 @@
+\chapter{Gmapping}
+
+\begin{verbatim}
+ Package Summary
+
+This package contains GMapping, from OpenSlam, and a ROS wrapper. The gmapping package provides laser-based SLAM (Simultaneous Localization and Mapping), as a ROS node called slam_gmapping. Using slam_gmapping, you can create a 2-D occupancy grid map (like a building floorplan) from laser and pose data collected by a mobile robot. This package uses r39 from GMapping SVN repsitory at openslam.org, with minor patches applied to support newer versions of GCC and OSX.
+
+    * Author: Giorgio Grisetti, Cyrill Stachniss, Wolfram Burgard; ROS wrapper by Brian Gerkey
+    * License: CreativeCommons-by-nc-sa-2.0
+    * Repository: ros-pkg
+    * Source: svn https://code.ros.org/svn/ros-pkg/stacks/slam_gmapping/trunk/gmapping
+
+Tabla de Contenidos
+
+   1. Package Summary
+   2. External Documentation
+   3. Hardware Requirements
+   4. Example
+   5. Nodes
+         1. slam_gmapping
+               1. Subscribed Topics
+               2. Published Topics
+               3. Services
+               4. Parameters
+               5. Required tf Transforms
+               6. Provided tf Transforms
+
+External Documentation
+
+This is mostly a third party package; the underlying GMapping library is externally documented. Look there for details on many of the parameters listed below.
+
+Hardware Requirements
+
+To use slam_gmapping, you need a mobile robot that provides odometry data and is equipped with a horizontally-mounted, fixed, laser range-finder. The slam_gmapping node will attempt to transform each incoming scan into the odom (odometry) tf frame. See the "Required tf transforms" for more on required transforms.
+
+Example
+
+To make a map from a robot with a laser publishing scans on the base_scan topic:
+
+rosrun gmapping slam_gmapping scan:=base_scan
+
+Nodes
+
+slam_gmapping
+The slam_gmapping node takes in sensor_msgs/LaserScan messages and builds a map (nav_msgs/OccupancyGrid). The map can be retrieved via a ROS topic or service.
+Subscribed Topics
+tf (tf/tfMessage)
+
+    * Transforms necessary to relate frames for laser, base, and odometry (see below) 
+
+scan (sensor_msgs/LaserScan)
+
+    * Laser scans to create the map from 
+
+Published Topics
+map_metadata (nav_msgs/MapMetaData)
+
+    * Get the map data from this topic, which is latched, and updated periodically. 
+
+map (nav_msgs/OccupancyGrid)
+
+    * Get the map data from this topic, which is latched, and updated periodically 
+
+~entropy (std_msgs/Float64)
+
+    * Estimate of the entropy of the distribution over the robot's pose (a higher value indicates greater uncertainty). New in 1.1.0. 
+
+Services
+dynamic_map (nav_msgs/GetMap)
+
+    * Call this service to get the map data 
+
+Parameters
+~inverted_laser (string, default: "false")
+
+    * (REMOVED in 1.1.1; transform data is used instead) Is the laser right side up (scans are ordered CCW), or upside down (scans are ordered CW)? 
+
+~throttle_scans (int, default: 1)
+
+    * Process 1 out of every this many scans (set it to a higher number to skip more scans) 
+
+~base_frame (string, default: "base_link")
+
+    * The frame attached to the mobile base. 
+
+~map_frame (string, default: "map")
+
+    * The frame attached to the map. 
+
+~odom_frame (string, default: "odom")
+
+    * The frame attached to the odometry system. 
+
+~map_update_interval (float, default: 5.0)
+
+    * How long (in seconds) between updates to the map. Lowering this number updates the occupancy grid more often, at the expense of greater computational load. 
+
+~maxUrange (float, default: 80.0)
+
+    * The maximum usable range of the laser. A beam is cropped to this value. 
+
+~sigma (float, default: 0.05)
+
+    * The sigma used by the greedy endpoint matching 
+
+~kernelSize (int, default: 1)
+
+    * The kernel in which to look for a correspondence 
+
+~lstep (float, default: 0.05)
+
+    * The optimization step in translation 
+
+~astep (float, default: 0.05)
+
+    * The optimization step in rotation 
+
+~iterations (int, default: 5)
+
+    * The number of iterations of the scanmatcher 
+
+~lsigma (float, default: 0.075)
+
+    * The sigma of a beam used for likelihood computation 
+
+~ogain (float, default: 3.0)
+
+    * Gain to be used while evaluating the likelihood, for smoothing the resampling effects 
+
+~lskip (int, default: 0)
+
+    * Number of beams to skip in each scan. 
+
+~srr (float, default: 0.1)
+
+    * Odometry error in translation as a function of translation (rho/rho) 
+
+~srt (float, default: 0.2)
+
+    * Odometry error in translation as a function of rotation (rho/theta) 
+
+~str (float, default: 0.1)
+
+    * Odometry error in rotation as a function of translation (theta/rho) 
+
+~stt (float, default: 0.2)
+
+    * Odometry error in rotation as a function of rotation (theta/theta) 
+
+~linearUpdate (float, default: 1.0)
+
+    * Process a scan each time the robot translates this far 
+
+~angularUpdate (float, default: 0.5)
+
+    * Process a scan each time the robot rotates this far 
+
+~temporalUpdate (float, default: -1.0)
+
+    * Process a scan if the last scan proccessed is older than the update time in seconds. A value less than zero will turn time based updates off. 
+
+~resampleThreshold (float, default: 0.5)
+
+    * The neff based resampling threshold (?) 
+
+~particles (int, default: 30)
+
+    * Number of particles in the filter 
+
+~xmin (float, default: -100.0)
+
+    * Initial map size 
+
+~ymin (float, default: -100.0)
+
+    * Initial map size 
+
+~xmax (float, default: 100.0)
+
+    * Initial map size 
+
+~ymax (float, default: 100.0)
+
+    * Initial map size 
+
+~delta (float, default: 0.05)
+
+    * Processing parameters (resolution of the map) 
+
+~llsamplerange (float, default: 0.01)
+
+    * Translational sampling range for the likelihood 
+
+~llsamplestep (float, default: 0.01)
+
+    * Translational sampling range for the likelihood 
+
+~lasamplerange (float, default: 0.005)
+
+    * Angular sampling range for the likelihood 
+
+~lasamplestep (float, default: 0.005)
+
+    * Angular sampling step for the likelihood 
+
+~transform_publish_period (float, default: 0.05)
+
+    * How long (in seconds) between transform publications. 
+
+~occ_thresh (float, default: 0.25)
+
+    * Threshold on gmapping's occupancy values. Cells with greater occupancy are considered occupied (i.e., set to 100 in the resulting sensor_msgs/LaserScan). New in 1.1.0. 
+
+~maxRange (float)
+
+    * The maximum range of the sensor. If regions with no obstacles within the range of the sensor should appear as free space in the map, set maxUrange < maximum range of the real sensor <= maxRange. 
+
+Required tf Transforms
+<the frame attached to incoming scans> → base_link
+
+    * usually a fixed value, broadcast periodically by a robot_state_publisher, or a tf static_transform_publisher. 
+
+base_link → odom
+
+    * usually provided by the odometry system (e.g., the driver for the mobile base) 
+
+Provided tf Transforms
+map → odom
+
+    * the current estimate of the robot's pose within the map frame 
+\end{verbatim}

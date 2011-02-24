@@ -2,7 +2,7 @@
 #include <joy/Joy.h>
 #include <geometry_msgs/Twist.h>
 
-const double max_speed = 1.5;
+const double max_speed = 1;
 double vel_x, vel_y, vel_rot;
 
 void joyCallback( const joy::JoyConstPtr& joy_msg )
@@ -18,12 +18,12 @@ void joyCallback( const joy::JoyConstPtr& joy_msg )
 	double throttle = 1.0;
 	if( joy_msg->axes.size() >= 4 )
 	{
-		throttle = (joy_msg->axes[3] + 1.0) / 2.0;	// map [-1; 1] --> [0; 1]
+//		throttle = (joy_msg->axes[3] + 1.0) / 2.0;	// map [-1; 1] --> [0; 1]
 	}
 
 	vel_x = joy_msg->axes[1] * throttle * max_speed;
-	vel_y = joy_msg->axes[2] * throttle * max_speed;
-	vel_rot = joy_msg->axes[0];
+	vel_y = joy_msg->axes[0] * throttle * max_speed;
+	vel_rot = joy_msg->axes[2];
 }
 
 int main(int argc, char** argv)

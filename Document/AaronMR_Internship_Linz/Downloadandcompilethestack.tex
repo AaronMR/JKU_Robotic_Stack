@@ -1,8 +1,12 @@
 \chapter{Download and compile the stack}
 
 In this project we are created a Stack to ROS (Robot Operating System). This stack contain all the code, drivers and nodes developed in the peoject.
-The code is hosted in github (http://www.github.com) in the next url
+The code is hosted in github (http://www.github.com) in the next url: 
+\begin{verbatim}
+    https://github.com/AaronMR/JKU_Robotic_Stack
+\end{verbatim}
 
+To download all the code from the repositories, we can do it with the next lines:
 
 \begin{verbatim}
     cd
@@ -17,3 +21,11 @@ now is necessary update your ROS\_PACKAGE\_PATH environment variable
     export ROS_PACKAGE_PATH=~/dev/JKU_Robotic_Stack:$ROS_PACKAGE_PATH
 \end{verbatim}
 
+Now we need compile all the nodes
+
+\begin{verbatim}
+    rosmake R1_Odom
+    rosmake R1_teleop_joy
+    rosmake R1_teleop_key
+    rosmake Laser_PLS200
+\end{verbatim}

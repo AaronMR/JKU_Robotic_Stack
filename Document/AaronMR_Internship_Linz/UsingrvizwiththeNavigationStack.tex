@@ -1,0 +1,171 @@
+\chapter{Using rviz with the Navigation Stack}
+
+\begin{verbatim}
+http://www.ros.org/wiki/navigation/Tutorials/Using%20rviz%20with%20the%20Navigation%20Stack
+
+ Description: This tutorial provides a guide to using rviz with the navigation stack to initialize the localization system, send goals to the robot, and view the many visualizations that the navigation stack publishes over ROS.
+
+Keywords: navigation rviz debugging
+
+Tutorial Level: BEGINNER
+
+Tabla de Contenidos
+
+   1. Overview
+   2. Setting Up rviz for the Navigation Stack
+   3. 2D Nav Goal
+   4. 2D Pose Estimate
+   5. Static Map
+   6. Particle Cloud
+   7. Robot Footprint
+   8. Obstacles
+   9. Inflated Obstacles
+  10. Unknown Space
+  11. Global Plan
+  12. Local Plan
+  13. Planner Plan
+  14. Current Goal
+
+Overview
+
+rviz is a powerful visualization tool that can be used for many different purposes. This tutorial assumes at least some familiarity with rviz on which documentation can be found here.
+
+Setting Up rviz for the Navigation Stack
+
+The following video shows how to setup rviz to work with the navigation stack. This includes setting the pose of the robot for a localization system like amcl, displaying all the visualization information that the navigation stack provides, and sending goals to the navigation stack with rviz. Discussions of each visualization topic the navstack publishes can be found below.
+
+2D Nav Goal
+
+    *
+
+      Topic: move_base_simple/goal
+    *
+
+      Description: Allows the user to send a goal to the navigation by setting a desired pose for the robot to achieve. 
+
+2D Pose Estimate
+
+    *
+
+      Topic: initialpose
+    *
+
+      Desctiption: Allows the user to initialize the localization system used by the navigation stack by setting the pose of the robot in the world. 
+
+Static Map
+
+    *
+
+      Topic: map
+    *
+
+      Type: nav_msgs/GetMap
+    *
+
+      Description: Displays the static map that is being served by the map_server if one exists. 
+
+Particle Cloud
+
+    *
+
+      Topic: particlecloud
+    *
+
+      Type: geometry_msgs/PoseArray
+    *
+
+      Description: Displays the particle cloud used by the robot's localization system. The spread of the cloud represents the localization system's uncertainty about the robot's pose. A cloud that is very spread out reflects high uncertainty, while a condensed cloud represents low uncertainty. 
+
+Robot Footprint
+
+    *
+
+      Topic: local_costmap/robot_footprint
+    *
+
+      Type: geometry_msgs/Polygon
+    * Description: Displays the footprint of the robot 
+
+Obstacles
+
+    *
+
+      Topic: local_costmap/obstacles
+    *
+
+      Type: nav_msgs/GridCells
+    *
+
+      Desctiption: Displays the obstacles that the navigation stack sees in its costmap. For the robot to avoid collision, the robot footprint should never intersect with a cell that contains an obstacle. 
+
+Inflated Obstacles
+
+    *
+
+      Topic: local_costmap/inflated_obstacles
+    *
+
+      Type: nav_msgs/GridCells
+    *
+
+      Description: Displays obstacles in the navigation stack's costmap inflated by the inscribed radius of the robot. For the robot to avoid collision, the center point of the robot should never overlap with a cell that contains an inflated obstacle. 
+
+Unknown Space
+
+    *
+
+      Topic: local_costmap/unknown_space
+    *
+
+      Type: nav_msgs/GridCells
+    *
+
+      Description: Displays any unknown space contained in the navigation stack's costmap_2d. 
+
+Global Plan
+
+    *
+
+      Topic: TrajectoryPlannerROS/global_plan
+    *
+
+      Type: nav_msgs/Path
+    *
+
+      Description: Displays the portion of the global plan that the local planner is currently pursuing. 
+
+Local Plan
+
+    *
+
+      Topic: TrajectoryPlannerROS/local_plan
+    *
+
+      Type: nav_msgs/Path
+    *
+
+      Description: Displays the trajectory associated with the velocity commands currently being commanded to the base by the local planner. 
+
+Planner Plan
+
+    *
+
+      Topic: NavfnROS/plan
+    *
+
+      Type: nav_msgs/Path
+    *
+
+      Description: Displays the full plan for the robot computed by the global planner. 
+
+Current Goal
+
+    *
+
+      Topic: current_goal
+    *
+
+      Type: geometry_msgs/PoseStamped
+    * Description: Displays the goal pose that the navigation stack is attempting to achieve. 
+\end{verbatim}
+
