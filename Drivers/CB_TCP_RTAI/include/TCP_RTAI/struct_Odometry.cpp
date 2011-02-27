@@ -18,7 +18,7 @@ struct_Odometry::struct_Odometry()
     auxSerialize.pose.pose.orientation.x = 0.0;
     auxSerialize.pose.pose.orientation.y = 0.0;
     auxSerialize.pose.pose.orientation.z = 0.0;
-    auxSerialize.pose.pose.orientation.w = 0.0;
+    auxSerialize.pose.pose.orientation.w = 1.0;
 
     auxSerialize.twist.twist.angular.x = 0.0;
     auxSerialize.twist.twist.angular.y = 0.0;
@@ -36,7 +36,7 @@ struct_Odometry::struct_Odometry()
     auxUnSerialize.pose.pose.orientation.x = 0.0;
     auxUnSerialize.pose.pose.orientation.y = 0.0;
     auxUnSerialize.pose.pose.orientation.z = 0.0;
-    auxUnSerialize.pose.pose.orientation.w = 0.0;
+    auxUnSerialize.pose.pose.orientation.w = 1.0;
 
     auxUnSerialize.twist.twist.angular.x = 0.0;
     auxUnSerialize.twist.twist.angular.y = 0.0;
@@ -94,6 +94,24 @@ void* struct_Odometry::set_Publisher(char* name)
 
     havePublisher = true;
     return NULL;
+
+    odometry_msg.pose.pose.position.x = 0.0;
+    odometry_msg.pose.pose.position.y = 0.0;
+    odometry_msg.pose.pose.position.z = 0.0;
+
+    odometry_msg.pose.pose.orientation.x = 0.0;
+    odometry_msg.pose.pose.orientation.y = 0.0;
+    odometry_msg.pose.pose.orientation.z = 0.0;
+    odometry_msg.pose.pose.orientation.w = 1.0;
+
+    odometry_msg.twist.twist.angular.x = 0.0;
+    odometry_msg.twist.twist.angular.y = 0.0;
+    odometry_msg.twist.twist.angular.z = 0.0;
+
+    odometry_msg.twist.twist.angular.x = 0.0;
+    odometry_msg.twist.twist.angular.y = 0.0;
+    odometry_msg.twist.twist.angular.z = 0.0;
+    odometry_pub.publish(odometry_msg);
 
 }
 

@@ -20,18 +20,19 @@ void cmdCallback(const joy::Joy::ConstPtr& joy)
 void cmdTwistCallback(const nav_msgs::Odometry &pose_aux)
 {
 
-odom_2.pose.pose.position.x = pose_aux.pose.pose.position.x;
-odom_2.pose.pose.position.y = pose_aux.pose.pose.position.y;
+    odom_2.pose.pose.position.x = pose_aux.pose.pose.position.x;
+    odom_2.pose.pose.position.y = pose_aux.pose.pose.position.y;
+    odom_2.pose.pose.position.z = 0.0;
 
-odom_2.pose.pose.orientation.x = pose_aux.pose.pose.orientation.x;
-odom_2.pose.pose.orientation.y = pose_aux.pose.pose.orientation.y;
-odom_2.pose.pose.orientation.z = pose_aux.pose.pose.orientation.z;
-odom_2.pose.pose.orientation.w = pose_aux.pose.pose.orientation.w;
+    //odom_2.pose.pose.orientation.x = pose_aux.pose.pose.orientation.x;
+    //odom_2.pose.pose.orientation.y = pose_aux.pose.pose.orientation.y;
+    odom_2.pose.pose.orientation.z = pose_aux.pose.pose.orientation.z;
+    odom_2.pose.pose.orientation.w = pose_aux.pose.pose.orientation.w;
 
 }
 
 int main(int argc, char** argv){
-  ros::init(argc, argv, "odometry_publisher_2");
+  ros::init(argc, argv, "r1_odom_2");
 
   ros::NodeHandle n;
   ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("odom", 50);
@@ -40,6 +41,16 @@ int main(int argc, char** argv){
   //ros::Subscriber joy_sub = n.subscribe("joy", 10, cmdCallback);
 
   ros::Subscriber pose_sub = n.subscribe("odom_1", 10, cmdTwistCallback);
+
+
+  odom_2.pose.pose.position.x = 0.0;
+  odom_2.pose.pose.position.y = 0.0;
+  odom_2.pose.pose.position.z = 0.0;
+
+  odom_2.pose.pose.orientation.x = 0.0;
+  odom_2.pose.pose.orientation.y = 0.0;
+  odom_2.pose.pose.orientation.z = 0.0;
+  odom_2.pose.pose.orientation.w = 1.0;
 
   twist.linear.x = 0.0;
   twist.linear.y = 0.0;
@@ -55,7 +66,7 @@ pose.position.x = 0.0;
 pose.orientation.x = 0.0;
 pose.orientation.y = 0.0;
 pose.orientation.z = 0.0;
-pose.orientation.w = 0.0;
+pose.orientation.w = 1.0;
 
   auxJoy1.buttons.resize(4);
   auxJoy1.axes.resize(4);
@@ -110,6 +121,13 @@ pose.orientation.w = 0.0;
     odom_trans.transform.rotation.y = odom_2.pose.pose.orientation.y;
     odom_trans.transform.rotation.z = odom_2.pose.pose.orientation.z;
     odom_trans.transform.rotation.w = odom_2.pose.pose.orientation.w;
+
+/*
+    printf("%f \n",odom_trans.transform.rotation.x);
+    printf("%f \n",odom_trans.transform.rotation.y);
+    printf("%f \n",odom_trans.transform.rotation.z);
+    printf("%f \n",odom_trans.transform.rotation.w);
+*/
     //odom_trans.transform.rotation = odom_quat;
 
     //send the transform
@@ -119,6 +137,7 @@ pose.orientation.w = 0.0;
     nav_msgs::Odometry odom;
     odom.header.stamp = current_time;
     odom.header.frame_id = "odom";
+    odom.child_frame_id = "base_link";
 
     //set the position
     odom.pose.pose.position.x = odom_2.pose.pose.position.x; //x;

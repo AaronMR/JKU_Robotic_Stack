@@ -1,0 +1,19 @@
+<package>
+  <description brief="R1_2dnav">
+
+     R1_2dnav
+
+  </description>
+  <author>aaronmr</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/R1_2dnav</url>
+  <depend package="R1_Odom"/>
+  <depend package="R1_urdf"/>
+  <depend package="joint_state_publisher"/>
+  <depend package="Laser_PLS200"/>
+  <depend package="CB_TCP_RTAI"/>
+
+</package>
+
+

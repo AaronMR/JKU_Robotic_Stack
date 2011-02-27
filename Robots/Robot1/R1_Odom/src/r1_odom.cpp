@@ -15,7 +15,7 @@ void cmdCallback(const joy::Joy::ConstPtr& joy)
     //cout << "estoy en el callback del struct_Joy_R" << endl;
 
 
-   
+   /*
 
     auxJoy1.axes[0]=joy->axes[0];
     auxJoy1.axes[1]=joy->axes[1];
@@ -27,24 +27,24 @@ void cmdCallback(const joy::Joy::ConstPtr& joy)
     auxJoy1.buttons[2]=joy->buttons[2];
     auxJoy1.buttons[3]=joy->buttons[3];
 
-
+*/
 
 }
 
 void cmdTwistCallback(const geometry_msgs::Twist &twist_aux)
 {
-
+/*
   twist.linear.x = twist_aux.linear.x;
   twist.linear.y = twist_aux.linear.y;
   twist.linear.z = twist_aux.linear.z;
   twist.angular.x = twist_aux.angular.x;
   twist.angular.y = twist_aux.angular.y;
   twist.angular.z = twist_aux.angular.z;
-
+*/
 }
 
 int main(int argc, char** argv){
-  ros::init(argc, argv, "odometry_publisher");
+  ros::init(argc, argv, "r1_odom");
 
   ros::NodeHandle n;
   ros::Publisher odom_pub = n.advertise<nav_msgs::Odometry>("odom", 50);
