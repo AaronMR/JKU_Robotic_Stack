@@ -5,13 +5,21 @@
 
 struct_Twist::struct_Twist()
 {
-    sizeof_Joy = sizeof(Joy);
+    auxSerialize.linear.x = 0.0;
+    auxSerialize.linear.y = 0.0;
+    auxSerialize.linear.z = 0.0;
 
-    pause = 100000;
-    t = 0;
+    auxSerialize.angular.x = 0.0;
+    auxSerialize.angular.y = 0.0;
+    auxSerialize.angular.z = 0.0;
 
+    auxUnSerialize.linear.x = 0.0;
+    auxUnSerialize.linear.y = 0.0;
+    auxUnSerialize.linear.z = 0.0;
 
-
+    auxUnSerialize.angular.x = 0.0;
+    auxUnSerialize.angular.y = 0.0;
+    auxUnSerialize.angular.z = 0.0;
 
 }
 
@@ -21,7 +29,7 @@ void struct_Twist::iniSHM(int shm_in, int shm_out, char* SHM_name)
     {
         printf("shm_in = %s", SHM_name);
         //dataIN = (Twist*)rtai_malloc (nam2num(SHMNAM_IN), sizeof(struct Twist)) ;
-        dataIN = (Twist*)rtai_malloc (nam2num(SHMNAM_IN), sizeof(struct Twist)) ;
+        dataIN = (Twist*)rtai_malloc (nam2num(SHM_name), sizeof(struct Twist)) ;
         dataIN->linear.x = 0.0;
         dataIN->linear.y = 0.0;
         dataIN->linear.z = 0.0;
@@ -35,7 +43,7 @@ void struct_Twist::iniSHM(int shm_in, int shm_out, char* SHM_name)
     {
         printf("shm_out = %s", SHM_name);
         //dataOUT = (Twist*)rtai_malloc (nam2num(SHMNAM_OUT), sizeof(struct Pose)) ;
-        dataOUT = (Twist*)rtai_malloc (nam2num(SHMNAM_OUT), sizeof(struct Twist)) ;
+        dataOUT = (Twist*)rtai_malloc (nam2num(SHM_name), sizeof(struct Twist)) ;
         dataOUT->linear.x = 0.0;
         dataOUT->linear.y = 0.0;
         dataOUT->linear.z = 0.0;
@@ -56,111 +64,86 @@ void struct_Twist::storeData(Joy *joy)
 char *struct_Twist::serialize(char* buf3)
 {
 	unsigned char buf[1024];
-//	unsigned char buf2[1024]="makiboludo";
-	unsigned char magic;
-//	int monkeycount;
-//	long altitude;
-//	double absurdityfactor;
-//	char *s = "Maki";
-//	char s2[96];
-	unsigned int packetsize, ps2;
-//    double maki[9];
+	unsigned int packetsize = 0;
 
+    auxSerialize.angular.x = dataOUT->angular.x;
+    auxSerialize.angular.y = dataOUT->angular.y;
+    auxSerialize.angular.z = dataOUT->angular.z;
 
-    Twist twist;
-
-    twist.angular.x = dataOUT->angular.x;
-    twist.angular.y = dataOUT->angular.y;
-    twist.angular.z = dataOUT->angular.z;
-
-    twist.linear.x = dataOUT->linear.x;
-    twist.linear.y = dataOUT->linear.y;
-    twist.linear.z = dataOUT->linear.z;
-
-
+    auxSerialize.linear.x = dataOUT->linear.x;
+    auxSerialize.linear.y = dataOUT->linear.y;
+    auxSerialize.linear.z = dataOUT->linear.z;
 
 	packetsize = pack(buf, "CHdddddd",    'A',
                                             0,
-                                            twist.angular.x,
-                                            twist.angular.y,
-                                            twist.angular.z,
-                                            twist.linear.x,
-                                            twist.linear.y,
-                                            twist.linear.z);
+                                            auxSerialize.angular.x,
+                                            auxSerialize.angular.y,
+                                            auxSerialize.angular.z,
+                                            auxSerialize.linear.x,
+                                            auxSerialize.linear.y,
+                                            auxSerialize.linear.z);
 
 	packi16(buf+1, packetsize); // store packet size in packet for kicks
 
     memcpy((unsigned char*)buf3, buf, packetsize);
 
-	unpack((unsigned char*)buf3, "CHdddddd",  &magic,
+
+    return NULL;
+}
+
+
+int struct_Twist::printStruct(char* data2print)
+{
+    unsigned char buf[1024];
+	unsigned char magic;
+	unsigned int ps2;
+
+    memcpy(buf, data2print, 1024);
+
+    unpack((unsigned char*)buf, "CHdddddd", &magic,
                                             &ps2,
-                                            &twist.angular.x,
-                                            &twist.angular.y,
-                                            &twist.angular.z,
-                                            &twist.linear.x,
-                                            &twist.linear.y,
-                                            &twist.linear.z);
+                                            &auxUnSerialize.linear.x,
+                                            &auxUnSerialize.linear.y,
+                                            &auxUnSerialize.linear.z,
+                                            &auxUnSerialize.angular.x,
+                                            &auxUnSerialize.angular.y,
+                                            &auxUnSerialize.angular.z);
 
-	printf("send: '%c' %hhu %f %f %f %f %f %f\n",   magic,
+	printf("data: '%c' %hhu %f %f %f %f %f %f\n",   magic,
                                                     ps2,
-                                                    twist.angular.x,
-                                                    twist.angular.y,
-                                                    twist.angular.z,
-                                                    twist.linear.x,
-                                                    twist.linear.y,
-                                                    twist.linear.z);
-
+                                                    auxUnSerialize.linear.x,
+                                                    auxUnSerialize.linear.y,
+                                                    auxUnSerialize.linear.z,
+                                                    auxUnSerialize.angular.x,
+                                                    auxUnSerialize.angular.y,
+                                                    auxUnSerialize.angular.z);
+    return 0;
 }
 
 char *struct_Twist::Unserialize(char* buf3)
 {
 	unsigned char buf[1024];
-	//unsigned char buf2[1024]="makiboludo";
-	unsigned char magic;
-	//int monkeycount;
-	//long altitude;
-	//double absurdityfactor;
-	//char *s = "Maki";
-	//char s2[96];
-	//unsigned int packetsize, ps2;
+    unsigned char magic;
 	unsigned int ps2;
-    //double maki[9];
 
     memcpy(buf, buf3, 1024);
 
-    Twist twist2;
-
-	unpack((unsigned char*)buf, "CHdddddd",  &magic,
+	unpack((unsigned char*)buf, "CHdddddd", &magic,
                                             &ps2,
-                                            &twist2.linear.x,
-                                            &twist2.linear.y,
-                                            &twist2.linear.z,
-                                            &twist2.angular.x,
-                                            &twist2.angular.y,
-                                            &twist2.angular.z);
+                                            &auxUnSerialize.linear.x,
+                                            &auxUnSerialize.linear.y,
+                                            &auxUnSerialize.linear.z,
+                                            &auxUnSerialize.angular.x,
+                                            &auxUnSerialize.angular.y,
+                                            &auxUnSerialize.angular.z);
 
-	printf("recv: '%c' %hhu %f %f %f %f %f %f\n",   magic,
-                                                    ps2,
-                                                    twist2.linear.x,
-                                                    twist2.linear.y,
-                                                    twist2.linear.z,
-                                                    twist2.angular.x,
-                                                    twist2.angular.y,
-                                                    twist2.angular.z);
-
-//###################################################################
-
-    dataIN->angular.x = twist2.angular.x;
-	dataIN->angular.y = twist2.angular.y;
-    dataIN->angular.z = twist2.angular.z;
-	dataIN->linear.x = twist2.linear.x;
-    dataIN->linear.y = twist2.linear.y;
-	dataIN->linear.z = twist2.linear.z;
+    dataIN->angular.x = auxUnSerialize.angular.x;
+	dataIN->angular.y = auxUnSerialize.angular.y;
+    dataIN->angular.z = auxUnSerialize.angular.z;
+	dataIN->linear.x = auxUnSerialize.linear.x;
+    dataIN->linear.y = auxUnSerialize.linear.y;
+	dataIN->linear.z = auxUnSerialize.linear.z;
     dataIN->newValue = true;
-
-
-
-//###################################################################
 
     return NULL;
 }

@@ -36,7 +36,7 @@ int main(int argv, char** argc)
         return -1;
     }
 
-    while(1)
+    while(ros::ok())
     {
 
         usleep(10000);
@@ -53,6 +53,8 @@ int main(int argv, char** argc)
             return -1;
         }
     }
+
+
     return 0;
 }
 

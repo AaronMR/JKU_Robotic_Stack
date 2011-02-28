@@ -12,7 +12,6 @@ using namespace std;
 
 struct DataLayout
 {
-    int putamierda;
     string name;
     string SHM_IN;
     string SHM_OUT;
@@ -40,15 +39,10 @@ public:
     parseFile(char* file);
     ~parseFile();
     int Parse(DataLayout * process);
-
     int getNumProcess();
-
-
 
 private:
     ifstream dataFile;
     int processCount;
-    // Location where the relevant data will be stored.
-
     DataLayout theData[5];
 };

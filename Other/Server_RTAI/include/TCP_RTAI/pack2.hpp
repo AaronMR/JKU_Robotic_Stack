@@ -31,6 +31,3 @@ unsigned int pack(unsigned char *buf, char *format, ...);
 **  prepended with a max length)
 */
 void unpack(unsigned char *buf, char *format, ...);
-
-int main2();
-

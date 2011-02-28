@@ -1,19 +1,29 @@
 #include "AaronMR_S.hpp"
 #include "pack2.hpp"
 
-#include <stdio.h>
-#include <math.h>
+
 #include <rtai_shm.h>
-
-
-//-----------------------------------------------struct struct_Joy--------------------------------------
 
 struct_Joy::struct_Joy()
 {
-    sizeof_Joy = sizeof(Joy);
+    auxSerialize.axes[0] = 0.0;
+    auxSerialize.axes[1] = 0.0;
+    auxSerialize.axes[2] = 0.0;
+    auxSerialize.axes[3] = 0.0;
+    auxSerialize.buttons[0] = 0;
+    auxSerialize.buttons[1] = 0;
+    auxSerialize.buttons[2] = 0;
+    auxSerialize.buttons[3] = 0;
 
+    auxUnSerialize.axes[0] = 0.0;
+    auxUnSerialize.axes[1] = 0.0;
+    auxUnSerialize.axes[2] = 0.0;
+    auxUnSerialize.axes[3] = 0.0;
+    auxUnSerialize.buttons[0] = 0;
+    auxUnSerialize.buttons[1] = 0;
+    auxUnSerialize.buttons[2] = 0;
+    auxUnSerialize.buttons[3] = 0;
 }
-
 
 void struct_Joy::iniSHM(int shm_in, int shm_out, char* SHM_name)
 {
@@ -56,123 +66,101 @@ void struct_Joy::storeData(Joy *joy)
 char *struct_Joy::serialize(char* buf3)
 {
 	unsigned char buf[1024];
+    unsigned int packetsize = 0;
 
-	unsigned char magic;
-
-	unsigned int packetsize, ps2;
-
-    Joy auxJoy2;
-
-
-    auxJoy2.axes[0] = dataOUT->axes[0];
-    auxJoy2.axes[1] = dataOUT->axes[1];
-    auxJoy2.axes[2] = dataOUT->axes[2];
-    auxJoy2.axes[3] = dataOUT->axes[3];
-    auxJoy2.buttons[0] = dataOUT->buttons[0];
-    auxJoy2.buttons[1] = dataOUT->buttons[1];
-    auxJoy2.buttons[2] = dataOUT->buttons[2];
-    auxJoy2.buttons[3] = dataOUT->buttons[3];
+    auxSerialize.axes[0] = dataOUT->axes[0];
+    auxSerialize.axes[1] = dataOUT->axes[1];
+    auxSerialize.axes[2] = dataOUT->axes[2];
+    auxSerialize.axes[3] = dataOUT->axes[3];
+    auxSerialize.buttons[0] = dataOUT->buttons[0];
+    auxSerialize.buttons[1] = dataOUT->buttons[1];
+    auxSerialize.buttons[2] = dataOUT->buttons[2];
+    auxSerialize.buttons[3] = dataOUT->buttons[3];
 
 	packetsize = pack(buf, "CHffffhhhh",    'A',
                                             0,
-                                            auxJoy2.axes[0],
-                                            auxJoy2.axes[1],
-                                            auxJoy2.axes[2],
-                                            auxJoy2.axes[3],
-                                            auxJoy2.buttons[0],
-                                            auxJoy2.buttons[1],
-                                            auxJoy2.buttons[2],
-                                            auxJoy2.buttons[3]);
+                                            auxSerialize.axes[0],
+                                            auxSerialize.axes[1],
+                                            auxSerialize.axes[2],
+                                            auxSerialize.axes[3],
+                                            auxSerialize.buttons[0],
+                                            auxSerialize.buttons[1],
+                                            auxSerialize.buttons[2],
+                                            auxSerialize.buttons[3]);
 
 	packi16(buf+1, packetsize); // store packet size in packet for kicks
 
     memcpy((unsigned char*)buf3, buf, packetsize);
 
-	unpack((unsigned char*)buf3, "CHffffhhhh",  &magic,
-                                            &ps2,
-                                            &auxJoy2.axes[0],
-                                            &auxJoy2.axes[1],
-                                            &auxJoy2.axes[2],
-                                            &auxJoy2.axes[3],
-                                            &auxJoy2.buttons[0],
-                                            &auxJoy2.buttons[1],
-                                            &auxJoy2.buttons[2],
-                                            &auxJoy2.buttons[3]);
+    return NULL;
+}
 
-	printf("send: '%c' %hhu %f %f %f %f %d %d %d %d\n",   magic,
-                                                    ps2,
-                                                    auxJoy2.axes[0],
-                                                    auxJoy2.axes[1],
-                                                    auxJoy2.axes[2],
-                                                    auxJoy2.axes[3],
-                                                    auxJoy2.buttons[0],
-                                                    auxJoy2.buttons[1],
-                                                    auxJoy2.buttons[2],
-                                                    auxJoy2.buttons[3]);
+int struct_Joy::printStruct(char* data2print)
+{
+    unsigned char buf[1024];
+	unsigned char magic;
+	unsigned int ps2;
 
+    memcpy(buf, data2print, 1024);
+
+    unpack(buf, "CHffffhhhh",   &magic,
+                            &ps2,
+                            &auxUnSerialize.axes[0],
+                            &auxUnSerialize.axes[1],
+                            &auxUnSerialize.axes[2],
+                            &auxUnSerialize.axes[3],
+                            &auxUnSerialize.buttons[0],
+                            &auxUnSerialize.buttons[1],
+                            &auxUnSerialize.buttons[2],
+                            &auxUnSerialize.buttons[3]
+                            );
+
+    printf("data: '%c' %hhu %f %f %f %f %d %d %d %d\n",   magic,
+                                                ps2,
+                                                auxUnSerialize.axes[0],
+                                                auxUnSerialize.axes[1],
+                                                auxUnSerialize.axes[2],
+                                                auxUnSerialize.axes[3],
+                                                auxUnSerialize.buttons[0],
+                                                auxUnSerialize.buttons[1],
+                                                auxUnSerialize.buttons[2],
+                                                auxUnSerialize.buttons[3]
+                                                );
+
+    return 0;
 }
 
 char *struct_Joy::Unserialize(char* buf3)
 {
 
 	unsigned char buf[1024];
-//	unsigned char buf2[1024]="makiboludo";
 	unsigned char magic;
-//	int monkeycount;
-//	long altitude;
-//	double absurdityfactor;
-//	char *s = "Maki";
-//	char s2[96];
-//	unsigned int packetsize, ps2;
 	unsigned int ps2;
-//    double maki[9];
 
     memcpy(buf, buf3, 1024);
 
-    Joy auxJoy2;
-	unpack(buf, "CHffffhhhh",  &magic,
-                                            &ps2,
-                                            &auxJoy2.axes[0],
-                                            &auxJoy2.axes[1],
-                                            &auxJoy2.axes[2],
-                                            &auxJoy2.axes[3],
-                                            &auxJoy2.buttons[0],
-                                            &auxJoy2.buttons[1],
-                                            &auxJoy2.buttons[2],
-                                            &auxJoy2.buttons[3]);
+	unpack(buf, "CHffffhhhh",   &magic,
+                                &ps2,
+                                &auxUnSerialize.axes[0],
+                                &auxUnSerialize.axes[1],
+                                &auxUnSerialize.axes[2],
+                                &auxUnSerialize.axes[3],
+                                &auxUnSerialize.buttons[0],
+                                &auxUnSerialize.buttons[1],
+                                &auxUnSerialize.buttons[2],
+                                &auxUnSerialize.buttons[3]
+                                );
 
-	printf("recv: '%c' %hhu %f %f %f %f %d %d %d %d\n",   magic,
-                                                    ps2,
-                                                    auxJoy2.axes[0],
-                                                    auxJoy2.axes[1],
-                                                    auxJoy2.axes[2],
-                                                    auxJoy2.axes[3],
-                                                    auxJoy2.buttons[0],
-                                                    auxJoy2.buttons[1],
-                                                    auxJoy2.buttons[2],
-                                                    auxJoy2.buttons[3]);
-
-
-
-//###################################################################
-
-
-
-
-
-
-    dataIN->axes[0] = auxJoy2.axes[0];
-	dataIN->axes[1]= auxJoy2.axes[1];
-    dataIN->axes[2]= auxJoy2.axes[2];
-	dataIN->axes[3]= auxJoy2.axes[3];
-    dataIN->buttons[0]= auxJoy2.buttons[0];
-	dataIN->buttons[1] = auxJoy2.buttons[1];
-    dataIN->buttons[2] = auxJoy2.buttons[2];
-	dataIN->buttons[3] = auxJoy2.buttons[3];
+    dataIN->axes[0] = auxUnSerialize.axes[0];
+	dataIN->axes[1] = auxUnSerialize.axes[1];
+    dataIN->axes[2] = auxUnSerialize.axes[2];
+	dataIN->axes[3] = auxUnSerialize.axes[3];
+    dataIN->buttons[0] = auxUnSerialize.buttons[0];
+	dataIN->buttons[1] = auxUnSerialize.buttons[1];
+    dataIN->buttons[2] = auxUnSerialize.buttons[2];
+	dataIN->buttons[3] = auxUnSerialize.buttons[3];
 
 	dataIN->newValue = true;
 
-
-//###################################################################
-
+    return NULL;
 }

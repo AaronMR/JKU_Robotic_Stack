@@ -4,10 +4,8 @@
   <!-- Run the map server -->
   <node name="map_server" pkg="map_server" type="map_server" args="$(find JKU_maps)/Laboratory/map.yaml" output="screen"/> 
 
-  <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="1 0 0 0 0 0 map odom 100" />
-
   <!--- Run AMCL -->
-  <include file="$(find amcl)/examples/amcl_omni.launch" />
+  <include file="$(find R1_2dnav)/amcl_omni.launch" />
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
 <remap from="move_base_simple/goal" to="goal" />

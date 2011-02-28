@@ -1,9 +1,3 @@
-#define SHMNAM_IN "SHMIN"
-#define SHMNAM_OUT "SHMOUT"
-
-//#####################################
-
-/**********************************************************************/
 
 #ifndef PARAMETERS
 #define PARAMETERS
@@ -39,6 +33,18 @@ struct comStruc_IN
 	bool newValue; // flag to true, when have new value
 };
 
+struct comStruc
+{
+	double x1;
+	double y1;
+    double x2;
+	double y2;
+    int a;
+	int b;
+    int c;
+	int d;
+	bool newValue; // flag to true, when have new value
+};
 
 
 struct data_str // OK

@@ -104,7 +104,7 @@ int parseFile::Parse(DataLayout * process)
                     {
                         if (data2.compare("no") == 0)
                             process[processCount].DEBUG = false;
-                        if (data2.compare("no") == 1)
+                        if (data2.compare("yes") == 0)
                             process[processCount].DEBUG = true;
                     }
 
@@ -116,27 +116,6 @@ int parseFile::Parse(DataLayout * process)
 
         }
 
-
-    }
-
-    for(int  i = 0; i< processCount + 1 ; i++)
-    {
-
-        cout << "Process ( " << endl;
-
-        cout << "   process["<< i << "].name  = " << process[i].name << endl;
-        cout << "   process["<< i << "].SHM_IN  = " << process[i].SHM_IN << endl;
-        cout << "   process["<< i << "].SHM_OUT  = " << process[i].SHM_OUT << endl;
-        cout << "   process["<< i << "].Node2RTAI  = " << process[i].Node2RTAI << endl;
-        cout << "   process["<< i << "].RTAI2Node  = " << process[i].RTAI2Node << endl;
-        cout << "   process["<< i << "].IP_RTAI  = " << process[i].IP_RTAI << endl;
-        cout << "   process["<< i << "].PORT_RTAI  = " << process[i].PORT_RTAI << endl;
-        cout << "   process["<< i << "].active  = " << process[i].active << endl;
-        cout << "   process["<< i << "].csock  = " << process[i].csock << endl;
-        cout << "   process["<< i << "].Subscriber  = " << process[i].Subscriber << endl;
-        cout << "   process["<< i << "].Publisher  = " << process[i].Publisher << endl;
-        cout << "   process["<< i << "].DEBUG  = " << process[i].DEBUG << endl;
-        cout << ") \n" << endl;
 
     }
 

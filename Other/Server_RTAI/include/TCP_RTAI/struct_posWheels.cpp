@@ -86,8 +86,7 @@ void struct_posWheels::iniSHM(int shm_in, int shm_out, char* SHM_name)
 char *struct_posWheels::serialize(char* buf3)
 {
 	unsigned char buf[1024];
-	unsigned char magic;
-	unsigned int packetsize, ps2;
+	unsigned int packetsize = 0;
 
     auxSerialize.pos_W[0].x = dataOUT->pos_W[0].x;
     auxSerialize.pos_W[0].y = dataOUT->pos_W[0].y;
@@ -125,45 +124,54 @@ char *struct_posWheels::serialize(char* buf3)
 
     memcpy((unsigned char*)buf3, buf, packetsize);
 
-	unpack((unsigned char*)buf3, "CHdddddddddddd",
+    return NULL;
+}
+
+int struct_posWheels::printStruct(char* data2print)
+{
+    unsigned char buf[1024];
+	unsigned char magic;
+	unsigned int ps2;
+
+    memcpy(buf, data2print, 1024);
+    unpack((unsigned char*)buf, "CHdddddddddddd",
                                             &magic,
                                             &ps2,
-                                            &auxSerialize.pos_W[0].x,
-                                            &auxSerialize.pos_W[0].y,
-                                            &auxSerialize.pos_W[0].z,
-                                            &auxSerialize.pos_W[1].x,
-                                            &auxSerialize.pos_W[1].y,
-                                            &auxSerialize.pos_W[1].z,
-                                            &auxSerialize.pos_W[2].x,
-                                            &auxSerialize.pos_W[2].y,
-                                            &auxSerialize.pos_W[2].z,
-                                            &auxSerialize.pos_W[3].x,
-                                            &auxSerialize.pos_W[3].y,
-                                            &auxSerialize.pos_W[3].z
+                                            &auxUnSerialize.pos_W[0].x,
+                                            &auxUnSerialize.pos_W[0].y,
+                                            &auxUnSerialize.pos_W[0].z,
+                                            &auxUnSerialize.pos_W[1].x,
+                                            &auxUnSerialize.pos_W[1].y,
+                                            &auxUnSerialize.pos_W[1].z,
+                                            &auxUnSerialize.pos_W[2].x,
+                                            &auxUnSerialize.pos_W[2].y,
+                                            &auxUnSerialize.pos_W[2].z,
+                                            &auxUnSerialize.pos_W[3].x,
+                                            &auxUnSerialize.pos_W[3].y,
+                                            &auxUnSerialize.pos_W[3].z
                                             );
 
-	printf("posWheels - send: '%c' %hhu %f %f %f %f %f %f %f %f %f %f %f %f\n",
+	printf("data: '%c' %hhu %f %f %f %f %f %f %f %f %f %f %f %f\n",
                                             magic,
                                             ps2,
-                                            auxSerialize.pos_W[0].x,
-                                            auxSerialize.pos_W[0].y,
-                                            auxSerialize.pos_W[0].z,
-                                            auxSerialize.pos_W[1].x,
-                                            auxSerialize.pos_W[1].y,
-                                            auxSerialize.pos_W[1].z,
-                                            auxSerialize.pos_W[2].x,
-                                            auxSerialize.pos_W[2].y,
-                                            auxSerialize.pos_W[2].z,
-                                            auxSerialize.pos_W[3].x,
-                                            auxSerialize.pos_W[3].y,
-                                            auxSerialize.pos_W[3].z
+                                            auxUnSerialize.pos_W[0].x,
+                                            auxUnSerialize.pos_W[0].y,
+                                            auxUnSerialize.pos_W[0].z,
+                                            auxUnSerialize.pos_W[1].x,
+                                            auxUnSerialize.pos_W[1].y,
+                                            auxUnSerialize.pos_W[1].z,
+                                            auxUnSerialize.pos_W[2].x,
+                                            auxUnSerialize.pos_W[2].y,
+                                            auxUnSerialize.pos_W[2].z,
+                                            auxUnSerialize.pos_W[3].x,
+                                            auxUnSerialize.pos_W[3].y,
+                                            auxUnSerialize.pos_W[3].z
                                             );
-
+    return 0;
 }
 
 char *struct_posWheels::Unserialize(char* buf3)
 {
-
     unsigned char buf[1024];
 	unsigned char magic;
 	unsigned int ps2;
@@ -185,23 +193,6 @@ char *struct_posWheels::Unserialize(char* buf3)
                                             &auxUnSerialize.pos_W[3].x,
                                             &auxUnSerialize.pos_W[3].y,
                                             &auxUnSerialize.pos_W[3].z
-                                            );
-
-	printf("posWheels - recv: '%c' %hhu %f %f %f %f %f %f %f %f %f %f %f %f\n",
-                                            magic,
-                                            ps2,
-                                            auxUnSerialize.pos_W[0].x,
-                                            auxUnSerialize.pos_W[0].y,
-                                            auxUnSerialize.pos_W[0].z,
-                                            auxUnSerialize.pos_W[1].x,
-                                            auxUnSerialize.pos_W[1].y,
-                                            auxUnSerialize.pos_W[1].z,
-                                            auxUnSerialize.pos_W[2].x,
-                                            auxUnSerialize.pos_W[2].y,
-                                            auxUnSerialize.pos_W[2].z,
-                                            auxUnSerialize.pos_W[3].x,
-                                            auxUnSerialize.pos_W[3].y,
-                                            auxUnSerialize.pos_W[3].z
                                             );
 
     dataIN->pos_W[0].x = auxUnSerialize.pos_W[0].x;

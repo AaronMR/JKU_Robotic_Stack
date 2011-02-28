@@ -347,7 +347,7 @@ int AaronMR_C::SetupCode(char* buffer)
 
 int exitClient(int hsock)
 {
-    close(hsock);
+    //close(hsock);
     return 0;
 }
 

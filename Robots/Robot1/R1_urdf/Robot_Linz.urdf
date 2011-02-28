@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
 <robot name="flexible">
 
+  <link name="odom">
+  </link>
+
+  <joint name="odom_base" type="continuous">
+    <parent link="odom"/>
+    <child link="base_link"/>
+  </joint>
+
   <link name="base_link">
     <visual>
       <geometry>

@@ -1,4 +1,3 @@
-
 #include "AaronMR_S.hpp"
 #include "pack2.hpp"
 #include <rtai_shm.h>
@@ -95,8 +94,7 @@ char *struct_Odometry::serialize(char* buf3)
 {
 
 	unsigned char buf[1024];
-	unsigned char magic;
-	unsigned int packetsize, ps2;
+	unsigned int packetsize = 0;
 
     auxSerialize.pose.pose.position.x = dataOUT->pose.pose.position.x;
 	auxSerialize.pose.pose.position.y = dataOUT->pose.pose.position.y;
@@ -136,42 +134,55 @@ char *struct_Odometry::serialize(char* buf3)
 
     memcpy((unsigned char*)buf3, buf, packetsize);
 
-	unpack((unsigned char*)buf3, "CHddddddddddddd",
+    return NULL;
+}
+
+int struct_Odometry::printStruct(char* data2print)
+{
+    unsigned char buf[1024];
+	unsigned char magic;
+	unsigned int ps2;
+
+    memcpy(buf, data2print, 1024);
+
+    unpack((unsigned char*)buf, "CHddddddddddddd",
                                         &magic,
                                         &ps2,
-                                        &auxSerialize.pose.pose.position.x,
-                                        &auxSerialize.pose.pose.position.y,
-                                        &auxSerialize.pose.pose.position.z,
-                                        &auxSerialize.pose.pose.orientation.x,
-                                        &auxSerialize.pose.pose.orientation.y,
-                                        &auxSerialize.pose.pose.orientation.z,
-                                        &auxSerialize.pose.pose.orientation.w,
-                                        &auxSerialize.twist.twist.angular.x,
-                                        &auxSerialize.twist.twist.angular.y,
-                                        &auxSerialize.twist.twist.angular.z,
-                                        &auxSerialize.twist.twist.linear.x,
-                                        &auxSerialize.twist.twist.linear.y,
-                                        &auxSerialize.twist.twist.linear.z
-                                        );
-
-	printf("posWheels - send: '%c' %hhu %f %f %f %f %f %f %f %f %f %f %f %f %f\n",
-                                        magic,
-                                        ps2,
-                                        auxSerialize.pose.pose.position.x,
-                                        auxSerialize.pose.pose.position.y,
-                                        auxSerialize.pose.pose.position.z,
-                                        auxSerialize.pose.pose.orientation.x,
-                                        auxSerialize.pose.pose.orientation.y,
-                                        auxSerialize.pose.pose.orientation.z,
-                                        auxSerialize.pose.pose.orientation.w,
-                                        auxSerialize.twist.twist.angular.x,
-                                        auxSerialize.twist.twist.angular.y,
-                                        auxSerialize.twist.twist.angular.z,
-                                        auxSerialize.twist.twist.linear.x,
-                                        auxSerialize.twist.twist.linear.y,
-                                        auxSerialize.twist.twist.linear.z
+                                        &auxUnSerialize.pose.pose.position.x,
+                                        &auxUnSerialize.pose.pose.position.y,
+                                        &auxUnSerialize.pose.pose.position.z,
+                                        &auxUnSerialize.pose.pose.orientation.x,
+                                        &auxUnSerialize.pose.pose.orientation.y,
+                                        &auxUnSerialize.pose.pose.orientation.z,
+                                        &auxUnSerialize.pose.pose.orientation.w,
+                                        &auxUnSerialize.twist.twist.angular.x,
+                                        &auxUnSerialize.twist.twist.angular.y,
+                                        &auxUnSerialize.twist.twist.angular.z,
+                                        &auxUnSerialize.twist.twist.linear.x,
+                                        &auxUnSerialize.twist.twist.linear.y,
+                                        &auxUnSerialize.twist.twist.linear.z
                                             );
 
+	printf("data: '%c' %hhu %f %f %f %f %f %f %f %f %f %f %f %f %f\n",
+                                        magic,
+                                        ps2,
+                                        auxUnSerialize.pose.pose.position.x,
+                                        auxUnSerialize.pose.pose.position.y,
+                                        auxUnSerialize.pose.pose.position.z,
+                                        auxUnSerialize.pose.pose.orientation.x,
+                                        auxUnSerialize.pose.pose.orientation.y,
+                                        auxUnSerialize.pose.pose.orientation.z,
+                                        auxUnSerialize.pose.pose.orientation.w,
+                                        auxUnSerialize.twist.twist.angular.x,
+                                        auxUnSerialize.twist.twist.angular.y,
+                                        auxUnSerialize.twist.twist.angular.z,
+                                        auxUnSerialize.twist.twist.linear.x,
+                                        auxUnSerialize.twist.twist.linear.y,
+                                        auxUnSerialize.twist.twist.linear.z
+                                        );
+
+
+    return 0;
 }
 
 char *struct_Odometry::Unserialize(char* buf3)
@@ -200,25 +211,6 @@ char *struct_Odometry::Unserialize(char* buf3)
                                         &auxUnSerialize.twist.twist.linear.y,
                                         &auxUnSerialize.twist.twist.linear.z
                                             );
-
-	printf("posWheels - recv: '%c' %hhu %f %f %f %f %f %f %f %f %f %f %f %f %f\n",
-                                        magic,
-                                        ps2,
-                                        auxUnSerialize.pose.pose.position.x,
-                                        auxUnSerialize.pose.pose.position.y,
-                                        auxUnSerialize.pose.pose.position.z,
-                                        auxUnSerialize.pose.pose.orientation.x,
-                                        auxUnSerialize.pose.pose.orientation.y,
-                                        auxUnSerialize.pose.pose.orientation.z,
-                                        auxUnSerialize.pose.pose.orientation.w,
-                                        auxUnSerialize.twist.twist.angular.x,
-                                        auxUnSerialize.twist.twist.angular.y,
-                                        auxUnSerialize.twist.twist.angular.z,
-                                        auxUnSerialize.twist.twist.linear.x,
-                                        auxUnSerialize.twist.twist.linear.y,
-                                        auxUnSerialize.twist.twist.linear.z
-                                        );
-
 
     dataIN->pose.pose.position.x = auxUnSerialize.pose.pose.position.x;
     dataIN->pose.pose.position.y = auxUnSerialize.pose.pose.position.y;

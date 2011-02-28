@@ -12,7 +12,6 @@ using namespace std;
 
 struct DataLayout
 {
-    int putamierda;
     string name;
     string SHM_IN;
     string SHM_OUT;
