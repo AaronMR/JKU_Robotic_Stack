@@ -26,7 +26,7 @@ int main(int argv, char** argc)
 
     ros::init(argv, argc, argc[2]);
 
-    AaronMR_C test(argc[1]);
+    transporter_C test(argc[1]);
 
     test.create_Socket();
 

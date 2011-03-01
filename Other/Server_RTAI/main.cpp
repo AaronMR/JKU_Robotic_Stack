@@ -13,14 +13,14 @@
 //#include "transmition.h"
 //#include "parameters.h"
 
-#include "AaronMR_S.hpp"
+#include "transporter_S.hpp"
 
 DataLayout process[5];
 int numProcess;
 
 int main(int argv, char** argc){
 
-    AaronMR_S test(argc[1]);
+    transporter_S test(argc[1]);
 
     while(1)
         test.waitEvent();
