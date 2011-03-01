@@ -10,7 +10,7 @@ struct_Odometry::struct_Odometry()
     canSend_t       = true;
     mutex           = PTHREAD_MUTEX_INITIALIZER;
 
-    // initialitation structure ausSerialize
+    // initialitation structure auxSerialize
     auxSerialize.pose.pose.position.x = 0.0;
     auxSerialize.pose.pose.position.y = 0.0;
     auxSerialize.pose.pose.position.z = 0.0;
@@ -28,7 +28,7 @@ struct_Odometry::struct_Odometry()
     auxSerialize.twist.twist.linear.y = 0.0;
     auxSerialize.twist.twist.linear.z = 0.0;
 
-    // initialitation structure ausUnSerialize
+    // initialitation structure auxUnSerialize
     auxUnSerialize.pose.pose.position.x = 0.0;
     auxUnSerialize.pose.pose.position.y = 0.0;
     auxUnSerialize.pose.pose.position.z = 0.0;
@@ -75,7 +75,6 @@ void struct_Odometry::cmdCallback(const nav_msgs::Odometry &data_)
 
     pthread_mutex_unlock(&mutex);
 
-
 }
 
 void* struct_Odometry::set_Subscriber(char* name)
@@ -115,8 +114,6 @@ void* struct_Odometry::set_Publisher(char* name)
 
 }
 
-
-
 bool struct_Odometry::canSend()
 {
     /*
@@ -149,44 +146,14 @@ bool struct_Odometry::canRecv()
 
 int struct_Odometry::spinOnce()
 {
-    /*
-    ros::spinOnce();
-    */
+
 }
 
 int struct_Odometry::serialize(char* data2s)
 {
-    /**
-    c = signed char             -> 8-bit
-    C = unsigned char           -> 8-bit unsigned
-
-    h = int                     -> 16-bit
-    H = unsigned int            -> 16-bit unsigned
-
-    l = long int                -> 32-bit
-    L = unsigned long int       -> 32-bit unsigned
-
-    q = long long int           -> 64-bit
-    Q = unsigned long long int  -> 64-bit unsigned
-
-    d = double                  -> float-32
-
-    g = long double             -> float-64
-
-    s = char*                   -> string
-
-    f = double                  -> float-16
-
-    CHhhh is :
-        C = char to type of message
-        H = for the leng of the message
-        hhh = to send 3 int
-    */
-
 	unsigned char buf[1024];
-	unsigned char magic;
 	unsigned int packetsize;
-	unsigned int ps2;
+
 
 
 	packetsize = pack(buf, "CHddddddddddddd",    'A',
@@ -210,44 +177,6 @@ int struct_Odometry::serialize(char* data2s)
 
     memcpy((unsigned char*)data2s, buf, packetsize);
 
-
-	unpack((unsigned char*)data2s, "CHddddddddddddd", &magic,
-                                            &ps2,
-                                            &auxSerialize.pose.pose.position.x,
-                                            &auxSerialize.pose.pose.position.y,
-                                            &auxSerialize.pose.pose.position.z,
-                                            &auxSerialize.pose.pose.orientation.x,
-                                            &auxSerialize.pose.pose.orientation.y,
-                                            &auxSerialize.pose.pose.orientation.z,
-                                            &auxSerialize.pose.pose.orientation.w,
-                                            &auxSerialize.twist.twist.angular.x,
-                                            &auxSerialize.twist.twist.angular.y,
-                                            &auxSerialize.twist.twist.angular.z,
-                                            &auxSerialize.twist.twist.linear.x,
-                                            &auxSerialize.twist.twist.linear.y,
-                                            &auxSerialize.twist.twist.linear.z
-                                            );
-
-/*
-	printf("Odometry - send: '%c' %hhu %f %f %f %f %f %f %f %f %f %f %f %f %f\n",    magic,
-                                            ps2,
-                                            auxSerialize.pose.pose.position.x,
-                                            auxSerialize.pose.pose.position.y,
-                                            auxSerialize.pose.pose.position.z,
-                                            auxSerialize.pose.pose.orientation.x,
-                                            auxSerialize.pose.pose.orientation.y,
-                                            auxSerialize.pose.pose.orientation.z,
-                                            auxSerialize.pose.pose.orientation.w,
-                                            auxSerialize.twist.twist.angular.x,
-                                            auxSerialize.twist.twist.angular.y,
-                                            auxSerialize.twist.twist.angular.z,
-                                            auxSerialize.twist.twist.linear.x,
-                                            auxSerialize.twist.twist.linear.y,
-                                            auxSerialize.twist.twist.linear.z
-                                            );
-
-*/
-
     return 0;
 }
 
@@ -259,39 +188,42 @@ int struct_Odometry::printStruct(char* data2print)
 
     memcpy(buf, data2print, 1024);
 
+    odometry_t aux;
     unpack((unsigned char*)buf, "CHddddddddddddd",
                                 &magic,
                                 &ps2,
-                                &auxUnSerialize.pose.pose.position.x,
-                                &auxUnSerialize.pose.pose.position.y,
-                                &auxUnSerialize.pose.pose.position.z,
-                                &auxUnSerialize.pose.pose.orientation.x,
-                                &auxUnSerialize.pose.pose.orientation.y,
-                                &auxUnSerialize.pose.pose.orientation.z,
-                                &auxUnSerialize.pose.pose.orientation.w,
-                                &auxUnSerialize.twist.twist.angular.x,
-                                &auxUnSerialize.twist.twist.angular.y,
-                                &auxUnSerialize.twist.twist.angular.z,
-                                &auxUnSerialize.twist.twist.linear.x,
-                                &auxUnSerialize.twist.twist.linear.y,
-                                &auxUnSerialize.twist.twist.linear.z
+                                &aux.pose.pose.position.x,
+                                &aux.pose.pose.position.y,
+                                &aux.pose.pose.position.z,
+                                &aux.pose.pose.orientation.x,
+                                &aux.pose.pose.orientation.y,
+                                &aux.pose.pose.orientation.z,
+                                &aux.pose.pose.orientation.w,
+                                &aux.twist.twist.angular.x,
+                                &aux.twist.twist.angular.y,
+                                &aux.twist.twist.angular.z,
+                                &aux.twist.twist.linear.x,
+                                &aux.twist.twist.linear.y,
+                                &aux.twist.twist.linear.z
                                 );
 	printf("data: '%c' %hhu %f %f %f %f %f %f %f %f %f %f %f %f %f\n",    magic,
                                             ps2,
-                                            auxSerialize.pose.pose.position.x,
-                                            auxSerialize.pose.pose.position.y,
-                                            auxSerialize.pose.pose.position.z,
-                                            auxSerialize.pose.pose.orientation.x,
-                                            auxSerialize.pose.pose.orientation.y,
-                                            auxSerialize.pose.pose.orientation.z,
-                                            auxSerialize.pose.pose.orientation.w,
-                                            auxSerialize.twist.twist.angular.x,
-                                            auxSerialize.twist.twist.angular.y,
-                                            auxSerialize.twist.twist.angular.z,
-                                            auxSerialize.twist.twist.linear.x,
-                                            auxSerialize.twist.twist.linear.y,
-                                            auxSerialize.twist.twist.linear.z
+                                            aux.pose.pose.position.x,
+                                            aux.pose.pose.position.y,
+                                            aux.pose.pose.position.z,
+                                            aux.pose.pose.orientation.x,
+                                            aux.pose.pose.orientation.y,
+                                            aux.pose.pose.orientation.z,
+                                            aux.pose.pose.orientation.w,
+                                            aux.twist.twist.angular.x,
+                                            aux.twist.twist.angular.y,
+                                            aux.twist.twist.angular.z,
+                                            aux.twist.twist.linear.x,
+                                            aux.twist.twist.linear.y,
+                                            aux.twist.twist.linear.z
                                             );
+
+    return 0;
 }
 int struct_Odometry::Unserialize(char* data2us)
 {
@@ -319,26 +251,6 @@ int struct_Odometry::Unserialize(char* data2us)
                                 &auxUnSerialize.twist.twist.linear.y,
                                 &auxUnSerialize.twist.twist.linear.z
                                 );
-
-    /*
-	printf("Odometry - recv: '%c' %hhu %f %f %f %f %f %f %f %f %f %f %f %f %f\n",
-                                            magic,
-                                            ps2,
-                                            auxUnSerialize.pose.pose.position.x,
-                                            auxUnSerialize.pose.pose.position.y,
-                                            auxUnSerialize.pose.pose.position.z,
-                                            auxUnSerialize.pose.pose.orientation.x,
-                                            auxUnSerialize.pose.pose.orientation.y,
-                                            auxUnSerialize.pose.pose.orientation.z,
-                                            auxUnSerialize.pose.pose.orientation.w,
-                                            auxUnSerialize.twist.twist.angular.x,
-                                            auxUnSerialize.twist.twist.angular.y,
-                                            auxUnSerialize.twist.twist.angular.z,
-                                            auxUnSerialize.twist.twist.linear.x,
-                                            auxUnSerialize.twist.twist.linear.y,
-                                            auxUnSerialize.twist.twist.linear.z
-                                            );
-    */
 
 
     if(havePublisher)

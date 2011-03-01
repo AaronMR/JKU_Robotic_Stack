@@ -18,8 +18,8 @@ public:
     int send_Data();
     int recv_Data();
 
-    structType* structToSend;
-    structType* structToRecv;
+    structType_C* structToSend;
+    structType_C* structToRecv;
     DataLayout configuration[5];
     char buffer[1024];
 

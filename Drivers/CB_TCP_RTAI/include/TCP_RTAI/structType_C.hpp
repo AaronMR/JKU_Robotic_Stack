@@ -10,11 +10,11 @@
 #include <geometry_msgs/Polygon.h>
 
 //-----------------------------------Types---------------------------------------------
-class structType {
+class structType_C {
 public:
 
-    virtual int serialize(char* maki) = 0;
-    virtual int Unserialize(char* maki) = 0;
+    virtual int serialize(char* data2s) = 0;
+    virtual int Unserialize(char* data2us) = 0;
     virtual void* set_Publisher(char* name) = 0;
     virtual void* set_Subscriber(char* name) = 0;
     virtual int printStruct(char* data2print)= 0;
@@ -27,12 +27,12 @@ public:
     //virtual void serialize(std::ostream& os) const = 0;
 };
 
-class struct_Joy : public structType {
+class struct_Joy : public structType_C {
 public:
     struct_Joy();
 
-    int serialize(char* maki);
-    int Unserialize(char* maki);
+    int serialize(char* data2s);
+    int Unserialize(char* data2us);
     int printStruct(char* data2print);
     void storeData(Joy *joy);
     void* set_Publisher(char* name);
@@ -42,13 +42,17 @@ public:
     ros::Publisher joy_pub;
     ros::Subscriber joy_sub;
 
+    // struct to send and receive
+    Joy auxSerialize;
+    Joy auxUnSerialize;
+
     Joy auxJoy1;
 
     joy::Joy joy_msg;
 
     int sizeof_Joy;
 
-    void cmdVelCallback(const joy::Joy::ConstPtr& joy);
+    void cmdCallback(const joy::Joy::ConstPtr& joy);
 
     bool haveSubscriber;
     bool havePublisher;
@@ -65,12 +69,12 @@ public:
 
 };
 
-class struct_Twist : public structType {
+class struct_Twist : public structType_C {
 public:
     struct_Twist();
 
-    int serialize(char* maki);
-    int Unserialize(char* maki);
+    int serialize(char* data2s);
+    int Unserialize(char* data2us);
     int printStruct(char* data2print);
     void storeData(Joy *joy);
     void* set_Publisher(char* name);
@@ -85,11 +89,16 @@ public:
     Joy auxJoy1;
 
     joy::Joy joy_msg;
-    geometry_msgs::Twist twist_;
+    geometry_msgs::Twist twist_msg;
+
+
+    // struct to send and receive
+    Twist auxSerialize;
+    Twist auxUnSerialize;
 
     int sizeof_Joy;
 
-    void cmdVelCallback(const geometry_msgs::Twist& joy);
+    void cmdCallback(const geometry_msgs::Twist& joy);
 
     bool haveSubscriber;
     bool havePublisher;
@@ -107,12 +116,12 @@ public:
 };
 
 
-class struct_Pose : public structType {
+class struct_Pose : public structType_C {
 public:
     struct_Pose();
 
-    int serialize(char* maki);
-    int Unserialize(char* maki);
+    int serialize(char* data2s);
+    int Unserialize(char* data2us);
     int printStruct(char* data2print);
     void storeData(Joy *joy);
     void* set_Publisher(char* name);
@@ -124,6 +133,10 @@ public:
 
     Joy auxJoy1;
     Pose auxPose1;
+
+    // struct to send and receive
+    Pose auxSerialize;
+    Pose auxUnSerialize;
 
     geometry_msgs::Pose pose_msg;
 
@@ -149,7 +162,7 @@ public:
 
 };
 
-class struct_posWheels : public structType {
+class struct_posWheels : public structType_C {
 
 public:
 
@@ -166,10 +179,10 @@ public:
     ros::Subscriber posWheels_sub;
 
     // struct to send and receive
-    posWheels_t data2send;
-    posWheels_t data2recv;
+    //posWheels_t data2send;
+    //posWheels_t data2recv;
 
-
+    // struct to send and receive
     posWheels_t auxSerialize;
     posWheels_t auxUnSerialize;
 
@@ -186,7 +199,7 @@ public:
     int spinOnce();
 };
 
-class struct_Odometry : public structType {
+class struct_Odometry : public structType_C {
 
 public:
 
@@ -203,10 +216,10 @@ public:
     ros::Subscriber odometry_sub;
 
     // struct to send and receive
-    odometry_t data2send;
-    odometry_t data2recv;
+    //odometry_t data2send;
+    //odometry_t data2recv;
 
-
+    // struct to send and receive
     odometry_t auxSerialize;
     odometry_t auxUnSerialize;
 

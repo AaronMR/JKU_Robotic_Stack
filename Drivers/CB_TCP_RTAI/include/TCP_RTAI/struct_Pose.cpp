@@ -1,27 +1,30 @@
-//#include "AaronMR_C.hpp"
 #include "pack2.hpp"
 #include "structType_C.hpp"
-//############################################### struct_Pose ##############################
 
 struct_Pose::struct_Pose()
 {
-
-
     haveSubscriber = false;
     havePublisher = false;
 
     ros::spinOnce();
 
-    //sizeof_Joy = sizeof(Joy);
+    auxSerialize.position.x = 0.0;
+    auxSerialize.position.y = 0.0;
+    auxSerialize.position.z = 0.0;
 
-    auxPose1.position.x = 0.0;
-    auxPose1.position.y = 0.0;
-    auxPose1.position.z = 0.0;
+    auxSerialize.orientation.x = 0.0;
+    auxSerialize.orientation.y = 0.0;
+    auxSerialize.orientation.z = 0.0;
+    auxSerialize.orientation.w = 0.0;
 
-    auxPose1.orientation.x = 0.0;
-    auxPose1.orientation.y = 0.0;
-    auxPose1.orientation.z = 0.0;
-    auxPose1.orientation.w = 0.0;
+    auxUnSerialize.position.x = 0.0;
+    auxUnSerialize.position.y = 0.0;
+    auxUnSerialize.position.z = 0.0;
+
+    auxUnSerialize.orientation.x = 0.0;
+    auxUnSerialize.orientation.y = 0.0;
+    auxUnSerialize.orientation.z = 0.0;
+    auxUnSerialize.orientation.w = 0.0;
 
 }
 
@@ -32,6 +35,7 @@ int struct_Pose::spinOnce()
 
 bool struct_Pose::canSend()
 {
+    /*
     int rc = 0;
     int aux = 0;
 
@@ -40,10 +44,12 @@ bool struct_Pose::canSend()
     rc = pthread_mutex_unlock(&mutex);
 
     return aux;
+    */
 }
 
 bool struct_Pose::canRecv()
 {
+    /*
     int rc = 0;
     int aux = 0;
 
@@ -52,30 +58,25 @@ bool struct_Pose::canRecv()
     rc = pthread_mutex_unlock(&mutex);
 
     return aux;
+    */
 }
 
 void struct_Pose::storeData(Joy *joy)
 {
-    return;
+
 }
 
 
 void struct_Pose::cmdCallback(const geometry_msgs::Pose& msg)
 {
+    auxSerialize.position.x = msg.position.x;
+    auxSerialize.position.y = msg.position.y;
+    auxSerialize.position.z = msg.position.z;
 
-
-    auxPose1.position.x = msg.position.x;
-    auxPose1.position.y = msg.position.y;
-    auxPose1.position.z = msg.position.z;
-
-    auxPose1.orientation.x = msg.orientation.x;
-    auxPose1.orientation.y = msg.orientation.y;
-    auxPose1.orientation.z = msg.orientation.z;
-    auxPose1.orientation.w = msg.orientation.w;
-    //cout << "estoy en el callback del struct_Joy_R" << endl;
-
-    //cout << "Estoy aki dentro" << endl;
-
+    auxSerialize.orientation.x = msg.orientation.x;
+    auxSerialize.orientation.y = msg.orientation.y;
+    auxSerialize.orientation.z = msg.orientation.z;
+    auxSerialize.orientation.w = msg.orientation.w;
 
 }
 
@@ -99,67 +100,20 @@ void* struct_Pose::set_Publisher(char* name)
 int struct_Pose::serialize(char* buf3)
 {
     ros::spinOnce();
-//---------------------------------------------------------------------------------------
 	unsigned char buf[1024];
-//	unsigned char buf2[1024]="makiboludo";
 	unsigned char magic;
-//	int monkeycount;
-//	long altitude;
-//	double absurdityfactor;
-//	char *s = "Maki";
-//	char s2[96];
 	unsigned int packetsize, ps2;
-//    double maki[9];
-
-    //Joy auxJoy2;
-
-    Twist twist;
-
-    Pose pose;
-
-    twist.angular.x = 1.1;
-    twist.angular.y = 2.2;
-    twist.angular.z = 3.3;
-
-    twist.linear.x = 4.4;
-    twist.linear.y = 5.5;
-    twist.linear.z = 6.6;
-
-    pose.position.x = auxPose1.position.x;
-    pose.position.y = auxPose1.position.y;
-    pose.position.z = auxPose1.position.z;
-
-    pose.orientation.x = auxPose1.orientation.x;
-    pose.orientation.y = auxPose1.orientation.y;
-    pose.orientation.z = auxPose1.orientation.z;
-    pose.orientation.w = auxPose1.orientation.w;
-
-
-
-
-    /*
-    auxJoy2.axes[0] = auxJoy1.axes[0];
-    auxJoy2.axes[1] = auxJoy1.axes[1];
-    auxJoy2.axes[2] = auxJoy1.axes[2];
-    auxJoy2.axes[3] = auxJoy1.axes[3];
-
-    auxJoy2.buttons[0] = auxJoy1.buttons[0];
-    auxJoy2.buttons[1] = auxJoy1.buttons[1];
-    auxJoy2.buttons[2] = auxJoy1.buttons[2];
-    auxJoy2.buttons[3] = auxJoy1.buttons[3];
-    */
-
-
 
     packetsize = pack(buf, "CHddddddd",    'A',
                                             0,
-                                            pose.position.x,
-                                            pose.position.y,
-                                            pose.position.z,
-                                            pose.orientation.x,
-                                            pose.orientation.y,
-                                            pose.orientation.z,
-                                            pose.orientation.w);
+                                            auxSerialize.position.x,
+                                            auxSerialize.position.y,
+                                            auxSerialize.position.z,
+                                            auxSerialize.orientation.x,
+                                            auxSerialize.orientation.y,
+                                            auxSerialize.orientation.z,
+                                            auxSerialize.orientation.w
+                                            );
 
 	packi16(buf+1, packetsize); // store packet size in packet for kicks
 
@@ -169,25 +123,15 @@ int struct_Pose::serialize(char* buf3)
 
 	unpack((unsigned char*)buf3, "CHddddddd",  &magic,
                                             &ps2,
-                                            &pose.position.x,
-                                            &pose.position.y,
-                                            &pose.position.z,
-                                            &pose.orientation.x,
-                                            &pose.orientation.y,
-                                            &pose.orientation.z,
-                                            &pose.orientation.w);
+                                            &auxSerialize.position.x,
+                                            &auxSerialize.position.y,
+                                            &auxSerialize.position.z,
+                                            &auxSerialize.orientation.x,
+                                            &auxSerialize.orientation.y,
+                                            &auxSerialize.orientation.z,
+                                            &auxSerialize.orientation.w);
 
-
-	printf("send: '%c' %hhu %f %f %f %f %f %f %f\n",   magic,
-                                                    ps2,
-                                                    pose.position.x,
-                                                    pose.position.y,
-                                                    pose.position.z,
-                                                    pose.orientation.x,
-                                                    pose.orientation.y,
-                                                    pose.orientation.z,
-                                                    pose.orientation.w);
-
+    return 0;
 }
 
 int struct_Pose::printStruct(char* data2print)
@@ -198,28 +142,28 @@ int struct_Pose::printStruct(char* data2print)
 
     memcpy(buf, data2print, 1024);
 
-    Pose pose;
+    Pose aux;
 
     unpack((unsigned char*)buf, "CHddddddd",  &magic,
                                             &ps2,
-                                            &pose.position.x,
-                                            &pose.position.y,
-                                            &pose.position.z,
-                                            &pose.orientation.x,
-                                            &pose.orientation.y,
-                                            &pose.orientation.z,
-                                            &pose.orientation.w);
+                                            &aux.position.x,
+                                            &aux.position.y,
+                                            &aux.position.z,
+                                            &aux.orientation.x,
+                                            &aux.orientation.y,
+                                            &aux.orientation.z,
+                                            &aux.orientation.w);
 
 
 	printf("send: '%c' %hhu %f %f %f %f %f %f %f\n",   magic,
                                                         ps2,
-                                                        pose.position.x,
-                                                        pose.position.y,
-                                                        pose.position.z,
-                                                        pose.orientation.x,
-                                                        pose.orientation.y,
-                                                        pose.orientation.z,
-                                                        pose.orientation.w);
+                                                        aux.position.x,
+                                                        aux.position.y,
+                                                        aux.position.z,
+                                                        aux.orientation.x,
+                                                        aux.orientation.y,
+                                                        aux.orientation.z,
+                                                        aux.orientation.w);
 }
 int struct_Pose::Unserialize(char* buf3)
 {
@@ -230,75 +174,31 @@ int struct_Pose::Unserialize(char* buf3)
 
     memcpy(buf, buf3, 1024);
 
-    Pose pose;
-
     unpack((unsigned char*)buf, "CHddddddd",  &magic,
                                             &ps2,
-                                            &pose.position.x,
-                                            &pose.position.y,
-                                            &pose.position.z,
-                                            &pose.orientation.x,
-                                            &pose.orientation.y,
-                                            &pose.orientation.z,
-                                            &pose.orientation.w);
+                                            &auxUnSerialize.position.x,
+                                            &auxUnSerialize.position.y,
+                                            &auxUnSerialize.position.z,
+                                            &auxUnSerialize.orientation.x,
+                                            &auxUnSerialize.orientation.y,
+                                            &auxUnSerialize.orientation.z,
+                                            &auxUnSerialize.orientation.w);
 
-    /*
-	printf("send: '%c' %hhu %f %f %f %f %f %f %f\n",   magic,
-                                                        ps2,
-                                                        pose.position.x,
-                                                        pose.position.y,
-                                                        pose.position.z,
-                                                        pose.orientation.x,
-                                                        pose.orientation.y,
-                                                        pose.orientation.z,
-                                                        pose.orientation.w);
-
-    */
 
     if(havePublisher)
     {
 
+        pose_msg.position.x = auxUnSerialize.position.x;
+        pose_msg.position.y = auxUnSerialize.position.y;
+        pose_msg.position.z = auxUnSerialize.position.z;
 
-        pose_msg.position.x = pose.position.x;
-        pose_msg.position.y = pose.position.y;
-        pose_msg.position.z = pose.position.z;
-
-        pose_msg.orientation.x = pose.orientation.x;
-        pose_msg.orientation.y = pose.orientation.y;
-        pose_msg.orientation.z = pose.orientation.z;
-        pose_msg.orientation.w = pose.orientation.w;
+        pose_msg.orientation.x = auxUnSerialize.orientation.x;
+        pose_msg.orientation.y = auxUnSerialize.orientation.y;
+        pose_msg.orientation.z = auxUnSerialize.orientation.z;
+        pose_msg.orientation.w = auxUnSerialize.orientation.w;
 
         Pose_pub.publish(pose_msg);
-        /*
-        joy_msg.buttons.resize(4);
-        joy_msg.axes.resize(4);
 
-        joy_msg.axes[0] = auxJoy2.axes[0];
-        joy_msg.axes[1] = auxJoy2.axes[1];
-        joy_msg.axes[2] = auxJoy2.axes[2];
-        joy_msg.axes[3] = auxJoy2.axes[3];
-
-        joy_msg.buttons[0] = auxJoy2.buttons[0];
-        joy_msg.buttons[1] = auxJoy2.buttons[1];
-        joy_msg.buttons[2] = auxJoy2.buttons[2];
-        joy_msg.buttons[3] = auxJoy2.buttons[3];
-        */
-
-        /*
-        twist_.angular.x = twist2.angular.x;
-        twist_.angular.y = twist2.angular.y;
-        twist_.angular.z = twist2.angular.z;
-        twist_.linear.x = twist2.linear.x;
-        twist_.linear.y = twist2.linear.y;
-        twist_.linear.z = twist2.linear.z;
-
-        Pose_pub.publish(joy_msg);
-        */
     }
-    return  NULL;
+    return  0;
 }
-
-//###########################################################################################
-
-
-

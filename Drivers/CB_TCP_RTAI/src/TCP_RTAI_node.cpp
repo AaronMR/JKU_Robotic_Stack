@@ -9,17 +9,9 @@
 #include <iostream>
 
 #include <cstdlib>
-#include "AaronMR_C.hpp"
+#include "transporter_C.hpp"
 
 using namespace std;
-
-int exitClient(int hsock);
-
-DataLayout process[5];
-
-turtlesim::Velocity vel;
-
-Struct_3 auxJoy;
 
 int main(int argv, char** argc)
 {
