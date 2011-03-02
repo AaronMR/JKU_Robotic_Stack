@@ -5,11 +5,9 @@
 #include <geometry_msgs/Twist.h>
 #include <turtlesim/Velocity.h>
 #include <joy/Joy.h>
-
 #include <geometry_msgs/Point.h>
 #include <geometry_msgs/Polygon.h>
 
-//-----------------------------------Types---------------------------------------------
 class structType_C {
 public:
 
@@ -20,11 +18,8 @@ public:
     virtual int printStruct(char* data2print)= 0;
     virtual bool canSend() = 0;
     virtual bool canRecv() = 0;
-
     virtual int spinOnce() = 0;
-
     void storeData();
-    //virtual void serialize(std::ostream& os) const = 0;
 };
 
 class struct_Joy : public structType_C {
@@ -46,13 +41,9 @@ public:
     Joy auxSerialize;
     Joy auxUnSerialize;
 
-    Joy auxJoy1;
-
     joy::Joy joy_msg;
 
-    int sizeof_Joy;
-
-    void cmdCallback(const joy::Joy::ConstPtr& joy);
+    void cmdCallback(const joy::Joy::ConstPtr& data);
 
     bool haveSubscriber;
     bool havePublisher;
@@ -84,21 +75,13 @@ public:
     ros::Publisher twist_pub;
     ros::Subscriber twist_sub;
 
-
-    Twist auxTwist1;
-    Joy auxJoy1;
-
-    joy::Joy joy_msg;
-    geometry_msgs::Twist twist_msg;
-
-
     // struct to send and receive
     Twist auxSerialize;
     Twist auxUnSerialize;
 
-    int sizeof_Joy;
+    geometry_msgs::Twist twist_msg;
 
-    void cmdCallback(const geometry_msgs::Twist& joy);
+    void cmdCallback(const geometry_msgs::Twist& data);
 
     bool haveSubscriber;
     bool havePublisher;
@@ -140,12 +123,7 @@ public:
 
     geometry_msgs::Pose pose_msg;
 
-    //joy::Joy joy_msg;
-    //geometry_msgs::Twist twist_;
-
-    int sizeof_Joy;
-
-    void cmdCallback(const geometry_msgs::Pose& joy);
+    void cmdCallback(const geometry_msgs::Pose& data);
 
     bool haveSubscriber;
     bool havePublisher;
@@ -179,16 +157,12 @@ public:
     ros::Subscriber posWheels_sub;
 
     // struct to send and receive
-    //posWheels_t data2send;
-    //posWheels_t data2recv;
-
-    // struct to send and receive
     posWheels_t auxSerialize;
     posWheels_t auxUnSerialize;
 
     geometry_msgs::Polygon polygon_msg;
 
-    void cmdCallback(const geometry_msgs::Polygon &data_);
+    void cmdCallback(const geometry_msgs::Polygon &data);
     bool haveSubscriber;
     bool havePublisher;
     pthread_mutex_t mutex;
@@ -204,7 +178,6 @@ class struct_Odometry : public structType_C {
 public:
 
     struct_Odometry();
-
     int serialize(char* data2s);
     int Unserialize(char* data2us);
     int printStruct(char* data2print);
@@ -216,16 +189,12 @@ public:
     ros::Subscriber odometry_sub;
 
     // struct to send and receive
-    //odometry_t data2send;
-    //odometry_t data2recv;
-
-    // struct to send and receive
     odometry_t auxSerialize;
     odometry_t auxUnSerialize;
 
     nav_msgs::Odometry odometry_msg;
 
-    void cmdCallback(const nav_msgs::Odometry &data_);
+    void cmdCallback(const nav_msgs::Odometry &data);
     bool haveSubscriber;
     bool havePublisher;
     pthread_mutex_t mutex;

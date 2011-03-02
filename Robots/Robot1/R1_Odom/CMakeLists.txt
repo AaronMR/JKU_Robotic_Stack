@@ -31,4 +31,5 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 rosbuild_add_executable(r1_odom src/r1_odom.cpp)
 rosbuild_add_executable(r1_odom_2 src/r1_odom_2.cpp)
+rosbuild_add_executable(tf_broadcaster src/tf_broadcaster.cpp)
 

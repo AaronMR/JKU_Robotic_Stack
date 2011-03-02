@@ -38,8 +38,6 @@
 			<Add option="-fexceptions" />
 			<Add directory="include/TCP_RTAI" />
 		</Compiler>
-		<Unit filename="include/TCP_RTAI/AaronMR_C.cpp" />
-		<Unit filename="include/TCP_RTAI/AaronMR_C.hpp" />
 		<Unit filename="include/TCP_RTAI/ServerFile.cfg" />
 		<Unit filename="include/TCP_RTAI/SocketException.h" />
 		<Unit filename="include/TCP_RTAI/comStruct.h" />
@@ -58,6 +56,8 @@
 		<Unit filename="include/TCP_RTAI/struct_Pose.cpp" />
 		<Unit filename="include/TCP_RTAI/struct_Twist.cpp" />
 		<Unit filename="include/TCP_RTAI/struct_posWheels.cpp" />
+		<Unit filename="include/TCP_RTAI/transporter_C.cpp" />
+		<Unit filename="include/TCP_RTAI/transporter_C.hpp" />
 		<Unit filename="src/TCP_RTAI_node.cpp" />
 		<Extensions>
 			<envvars set="default" />

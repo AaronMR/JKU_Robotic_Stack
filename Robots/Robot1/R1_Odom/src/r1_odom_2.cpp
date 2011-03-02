@@ -145,17 +145,17 @@ pose.orientation.w = 1.0;
     //first, we'll publish the transform over tf
     geometry_msgs::TransformStamped odom_trans;
     odom_trans.header.stamp = current_time;
-    odom_trans.header.frame_id = "odom";
-    odom_trans.child_frame_id = "base_link";
+    odom_trans.header.frame_id = "/odom_combined";
+    odom_trans.child_frame_id = "/base_footprint";
 
-    odom_trans.transform.translation.x = odom_4.pose.pose.position.x;
-    odom_trans.transform.translation.y = odom_4.pose.pose.position.y;
+    odom_trans.transform.translation.x = odom_2.pose.pose.position.x;
+    odom_trans.transform.translation.y = odom_2.pose.pose.position.y;
     odom_trans.transform.translation.z = 0.0;
     
-    odom_trans.transform.rotation.x = odom_4.pose.pose.orientation.x;
-    odom_trans.transform.rotation.y = odom_4.pose.pose.orientation.y;
-    odom_trans.transform.rotation.z = odom_4.pose.pose.orientation.z;
-    odom_trans.transform.rotation.w = odom_4.pose.pose.orientation.w;
+    odom_trans.transform.rotation.x = odom_2.pose.pose.orientation.x;
+    odom_trans.transform.rotation.y = odom_2.pose.pose.orientation.y;
+    odom_trans.transform.rotation.z = odom_2.pose.pose.orientation.z;
+    odom_trans.transform.rotation.w = odom_2.pose.pose.orientation.w;
 
 /*
     printf("%f \n",odom_trans.transform.rotation.x);
@@ -171,22 +171,22 @@ pose.orientation.w = 1.0;
     //next, we'll publish the odometry message over ROS
     nav_msgs::Odometry odom;
     odom.header.stamp = current_time;
-    odom.header.frame_id = "odom";
-    odom.child_frame_id = "base_link";
+    odom.header.frame_id = "/odom_combined";
+    odom.child_frame_id = "/base_footprint";
 
     //set the position
-    odom.pose.pose.position.x = odom_4.pose.pose.position.x; //x;
-    odom.pose.pose.position.y = odom_4.pose.pose.position.y; //y;
+    odom.pose.pose.position.x = odom_2.pose.pose.position.x; //x;
+    odom.pose.pose.position.y = odom_2.pose.pose.position.y; //y;
     odom.pose.pose.position.z = 0.0;
 
 //    odom.pose.pose.orientation = odom_quat;
-    odom.pose.pose.orientation.x = odom_4.pose.pose.orientation.x;
-    odom.pose.pose.orientation.y = odom_4.pose.pose.orientation.y;
-    odom.pose.pose.orientation.z = odom_4.pose.pose.orientation.z;
-    odom.pose.pose.orientation.w = odom_4.pose.pose.orientation.w;
+    //odom.pose.pose.orientation.x = odom_2.pose.pose.orientation.x;
+    //odom.pose.pose.orientation.y = odom_2.pose.pose.orientation.y;
+    odom.pose.pose.orientation.z = odom_2.pose.pose.orientation.z;
+    odom.pose.pose.orientation.w = odom_2.pose.pose.orientation.w;
 
     //set the velocity
-    odom.child_frame_id = "base_link";
+    
     odom.twist.twist.linear.x = vx;
     odom.twist.twist.linear.y = vy;
     odom.twist.twist.angular.z = vth;

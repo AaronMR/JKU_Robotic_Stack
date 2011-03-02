@@ -2,7 +2,7 @@
   <master auto="start"/>
 
   <!-- Run the map server -->
-  <node name="map_server" pkg="map_server" type="map_server" args="$(find JKU_maps)/Laboratory/map.yaml" output="screen"/> 
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find JKU_maps)/Laboratory/map.pgm 0.05" output="screen"/> 
 
   <!--- Run AMCL -->
   <include file="$(find R1_2dnav)/amcl_omni.launch" />
