@@ -145,7 +145,7 @@ pose.orientation.w = 1.0;
     //first, we'll publish the transform over tf
     geometry_msgs::TransformStamped odom_trans;
     odom_trans.header.stamp = current_time;
-    odom_trans.header.frame_id = "/odom_combined";
+    odom_trans.header.frame_id = "/odom";
     odom_trans.child_frame_id = "/base_footprint";
 
     odom_trans.transform.translation.x = odom_2.pose.pose.position.x;
@@ -171,7 +171,7 @@ pose.orientation.w = 1.0;
     //next, we'll publish the odometry message over ROS
     nav_msgs::Odometry odom;
     odom.header.stamp = current_time;
-    odom.header.frame_id = "/odom_combined";
+    odom.header.frame_id = "/odom";
     odom.child_frame_id = "/base_footprint";
 
     //set the position

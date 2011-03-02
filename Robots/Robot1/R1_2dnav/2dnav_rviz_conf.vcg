@@ -2,7 +2,7 @@ Background\ ColorR=0.0941176
 Background\ ColorG=0
 Background\ ColorB=0.466667
 Fixed\ Frame=/map
-Target\ Frame=<Fixed Frame>
+Target\ Frame=/base_footprint
 Grid\ Cells.Alpha=1
 Grid\ Cells.ColorR=0.1
 Grid\ Cells.ColorG=1
@@ -120,8 +120,8 @@ TF.Update\ Interval=0
 Tool\ 2D\ Nav\ GoalTopic=goal
 Tool\ 2D\ Pose\ EstimateTopic=initialpose
 Camera\ Type=rviz::OrbitViewController
-Camera\ Config=1.271 1.97097 3.87579 -0.486961 0.745771 -1.03527
-Property\ Grid\ State=selection=TF.Enabled.TF.Show Names;expanded=.Global Options,TF.Enabled,TF./PLS200/PLS200,TF./base_footprint/base_footprint,TF./base_link/base_link,TF./kinect_rgb/kinect_rgb,TF./odom_combined/odom_combined,TF./wheel_1/wheel_1,TF./wheel_2/wheel_2,TF./wheel_3/wheel_3,TF./wheel_4/wheel_4,TF./map/map,TF.Enabled.TF.Tree,TF./mapTree/map,TF./odom_combinedTree/odom_combined,TF./base_footprintTree/base_footprint,TF./base_linkTree/base_link,TF./kinect_rgbTree/kinect_rgb,TF./wheel_1Tree/wheel_1,TF./wheel_2Tree/wheel_2,TF./wheel_3Tree/wheel_3,TF./wheel_4Tree/wheel_4,TF./PLS200Tree/PLS200,Grid Cells2.Enabled;scrollpos=0,9;splitterpos=168,321;ispageselected=1
+Camera\ Config=0.695411 2.17981 10.9757 -0.0241825 0.680233 -1.91887
+Property\ Grid\ State=selection=Target Frame;expanded=.Global Options,TF.Enabled,TF./PLS200/PLS200,TF./base_footprint/base_footprint,TF./base_link/base_link,TF./kinect_rgb/kinect_rgb,TF./wheel_1/wheel_1,TF./wheel_2/wheel_2,TF./wheel_3/wheel_3,TF./wheel_4/wheel_4,TF./odom_combined/odom_combined,TF./map/map,TF.Enabled.TF.Tree,TF./base_footprintTree/base_footprint,TF./base_linkTree/base_link,TF./kinect_rgbTree/kinect_rgb,TF./wheel_1Tree/wheel_1,TF./wheel_2Tree/wheel_2,TF./wheel_3Tree/wheel_3,TF./wheel_4Tree/wheel_4,TF./PLS200Tree/PLS200,TF./mapTree/map,TF./odom_combinedTree/odom_combined,Grid Cells2.Enabled;scrollpos=0,0;splitterpos=168,321;ispageselected=1
 [Display0]
 Name=Grid
 Package=rviz
