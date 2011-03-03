@@ -2,7 +2,8 @@
 #include <joy/Joy.h>
 #include <geometry_msgs/Twist.h>
 
-const double max_speed = 1;
+const double max_speed = 0.5;
+const double max_rotation = 0.4;
 double vel_x, vel_y, vel_rot;
 
 void joyCallback( const joy::JoyConstPtr& joy_msg )
@@ -23,7 +24,7 @@ void joyCallback( const joy::JoyConstPtr& joy_msg )
 
 	vel_x = joy_msg->axes[1] * throttle * max_speed;
 	vel_y = joy_msg->axes[0] * throttle * max_speed;
-	vel_rot = joy_msg->axes[2];
+	vel_rot = joy_msg->axes[2] * max_rotation;
 }
 
 int main(int argc, char** argv)
