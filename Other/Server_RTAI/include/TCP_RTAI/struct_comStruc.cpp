@@ -1,5 +1,5 @@
 
-#include "AaronMR_S.hpp"
+#include "transporter_S.hpp"
 #include "pack2.hpp"
 
 #include <stdio.h>
@@ -58,11 +58,6 @@ void struct_comStruc::iniSHM(int shm_in, int shm_out, char* SHM_name)
         dataOUT->c = 0;
         dataOUT->d = 0;
     }
-}
-
-void struct_comStruc::storeData(Joy *joy)
-{
-    return;
 }
 
 char *struct_comStruc::serialize(char* buf3)

@@ -2,7 +2,7 @@
 #include <joy/Joy.h>
 #include <geometry_msgs/Twist.h>
 
-const double max_speed = 0.5;
+const double max_speed = 1;
 const double max_rotation = 0.4;
 double vel_x, vel_y, vel_rot;
 

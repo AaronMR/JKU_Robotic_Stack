@@ -1,4 +1,4 @@
-#include "AaronMR_S.hpp"
+#include "transporter_S.hpp"
 #include "pack2.hpp"
 #include <rtai_shm.h>
 //############################################### struct_Twist ##############################
@@ -55,11 +55,6 @@ void struct_Twist::iniSHM(int shm_in, int shm_out, char* SHM_name)
 
 }
 
-
-void struct_Twist::storeData(Joy *joy)
-{
-    return;
-}
 
 char *struct_Twist::serialize(char* buf3)
 {

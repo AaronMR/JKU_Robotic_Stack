@@ -114,9 +114,6 @@ public:
     ros::Publisher Pose_pub;
     ros::Subscriber Pose_sub;
 
-    Joy auxJoy1;
-    Pose auxPose1;
-
     // struct to send and receive
     Pose auxSerialize;
     Pose auxUnSerialize;

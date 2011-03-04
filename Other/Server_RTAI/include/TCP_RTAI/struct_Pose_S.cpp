@@ -1,5 +1,5 @@
 
-#include "AaronMR_S.hpp"
+#include "transporter_S.hpp"
 #include "pack2.hpp"
 #include <rtai_shm.h>
 //############################################### struct_Pose ##############################
@@ -59,11 +59,6 @@ void struct_Pose::iniSHM(int shm_in, int shm_out, char* SHM_name)
         dataOUT->orientation.w = 7.7;
     }
 
-}
-
-void struct_Pose::storeData(Joy *joy)
-{
-    return;
 }
 
 char *struct_Pose::serialize(char* buf3)

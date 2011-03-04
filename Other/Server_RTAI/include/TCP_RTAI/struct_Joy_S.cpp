@@ -1,4 +1,4 @@
-#include "AaronMR_S.hpp"
+#include "transporter_S.hpp"
 #include "pack2.hpp"
 
 
@@ -58,10 +58,6 @@ void struct_Joy::iniSHM(int shm_in, int shm_out, char* SHM_name)
     }
 }
 
-void struct_Joy::storeData(Joy *joy)
-{
-    return;
-}
 
 char *struct_Joy::serialize(char* buf3)
 {
