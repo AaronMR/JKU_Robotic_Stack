@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<robot name="flexible">
-
-
+<robot name="robot1">
   <link name="base_link">
     <visual>
       <geometry>
@@ -10,8 +8,6 @@
       <origin xyz="0 0 0.226"/>
     </visual>
   </link>
-
-
 
   <link name="kinect_rgb">
     <visual>
@@ -23,13 +19,6 @@
     </visual>
   </link>
 
-  <joint name="tobox2" type="continuous">
-    <parent link="base_link"/>
-    <child link="kinect_rgb"/>
-    <origin rpy="-1.57 0 -1.570" xyz="0.320 0 0.555"/>
-    
-  </joint>
-
   <link name="wheel_1">
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -38,13 +27,6 @@
       </geometry>
     </visual>
   </link>
-
-  <joint name="tobox5" type="continuous">
-    <parent link="base_link"/>
-    <child link="wheel_1"/>
-    <axis xyz="0 0 1"/>
-    <origin rpy="0 0 0" xyz="0.235 -0.17 0"/>
-  </joint>
 
   <link name="wheel_2">
     <visual>
@@ -55,13 +37,6 @@
     </visual>
   </link>
 
-  <joint name="tobox6" type="continuous">
-    <parent link="base_link"/>
-    <child link="wheel_2"/>
-    <axis xyz="0 0 1"/>
-    <origin rpy="0 0 3.14" xyz="0.235 0.17 0"/>
-  </joint>
-
   <link name="wheel_3">
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -70,13 +45,6 @@
       </geometry>
     </visual>
   </link>
-
-  <joint name="tobox7" type="continuous">
-    <parent link="base_link"/>
-    <child link="wheel_3"/>
-    <axis xyz="0 0 1"/>
-    <origin rpy="0 0 0 " xyz="-0.235 -0.17 0"/>
-  </joint>
 
   <link name="wheel_4">
     <visual>
@@ -87,13 +55,6 @@
     </visual>
   </link>
 
-  <joint name="tobox8" type="continuous">
-    <parent link="base_link"/>
-    <child link="wheel_4"/>
-    <axis xyz="0 0 1"/>
-    <origin rpy="0 0 3.14" xyz="-0.235 0.17 0"/>
-  </joint>
-
   <link name="PLS200">
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -103,15 +64,45 @@
     </visual>
   </link>
 
-  <joint name="tobox9" type="continuous">
+  <joint name="join_1" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_1"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 0 0" xyz="0.235 -0.17 0"/>
+  </joint>
+
+  <joint name="join_2" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_2"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 0 3.14" xyz="0.235 0.17 0"/>
+  </joint>
+
+  <joint name="join_3" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_3"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 0 0 " xyz="-0.235 -0.17 0"/>
+  </joint>
+
+  <joint name="join_4" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel_4"/>
+    <axis xyz="0 0 1"/>
+    <origin rpy="0 0 3.14" xyz="-0.235 0.17 0"/>
+  </joint>
+
+  <joint name="join_5" type="continuous">
+    <parent link="base_link"/>
+    <child link="kinect_rgb"/>
+    <origin rpy="-1.57 0 -1.570" xyz="0.320 0 0.555"/>    
+  </joint>
+
+  <joint name="join_6" type="continuous">
     <parent link="base_link"/>
     <child link="PLS200"/>
     <origin rpy="0 0 0" xyz="0.420 0 0.26"/>
   </joint>
-
-
-
-
 
 </robot>
 
