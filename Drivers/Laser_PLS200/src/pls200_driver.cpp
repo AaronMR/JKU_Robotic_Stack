@@ -42,7 +42,7 @@ sick_pls200::SickPLS200::SickPLS200 ()
   scan_min_segment = 0;
   scan_max_segment = 360;
   
-  texto = "Esto parece que funciona";
+  texto = "works";
   Aux = 1;
 }
 
@@ -95,6 +95,7 @@ int sick_pls200::SickPLS200::OpenTerm()
   
 #ifdef DEBUG
 	printf("Funcion OpenTerm \n");
+	printf("device_name %s\n", this->device_name);
 #endif
   this->laser_fd = ::open(this->device_name, O_RDWR | O_SYNC , S_IRUSR | S_IWUSR );
 

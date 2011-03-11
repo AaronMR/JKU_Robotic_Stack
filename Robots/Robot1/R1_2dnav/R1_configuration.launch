@@ -12,8 +12,6 @@
   <node pkg="Laser_PLS200" type="pls_node" name="pls_node" output="screen"></node>
   <node pkg="CB_TCP_RTAI" name="sample"  type="sample" args="$(find CB_TCP_RTAI)/include/TCP_RTAI/process_3.cfg node_3" output="screen"/> 
   
-  <!-- Kinect -->
-  <include file="$(find kinect_camera)/launch/kinect_nodelets.launch" />
   
   <node pkg="rviz" type="rviz" name="rviz" args="-d $(find R1_2dnav)/2dnav_rviz_conf.vcg" />
 </launch>

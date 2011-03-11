@@ -12,6 +12,7 @@ int main(int argc, char** argv){
   // creacion del objeto laser.....
   SickPLS200 laser;
   laser.device_name = "/dev/ttyUSB0";
+  //laser.device_name = "/dev/ttyS0";
 
   ros::NodeHandle n;
   ros::Publisher scan_pub = n.advertise<sensor_msgs::LaserScan>("tilt_scan1", 50);
@@ -25,15 +26,15 @@ int main(int argc, char** argv){
   int count = 0;
   ros::Rate r(50);
 
-  
+
   // connection of Laser
   if (laser.OpenTerm() == 1)
   {
-	std::cout << "yeah\n";
+	std::cout << "\n";
   }
   else
   {
-	std::cout << "NOOOO\n";
+	std::cout << "\n";
   }
 
   laser.StartLaser();

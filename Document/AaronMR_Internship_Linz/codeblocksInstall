@@ -1,0 +1,19 @@
+#! /bin/bash
+
+cd
+mkdir dev
+cd dev
+mkdir codeblocks
+cd codeblocks
+
+sudo apt-get install build-essential libgtk2.0-dev libwxgtk2.8-0 libwxgtk2.8-dev wx-common subversion autoconf automake libtool gobjc++ cmake-curses-gui
+
+svn checkout svn://svn.berlios.de/codeblocks/trunk
+cd trunk
+export ACLOCAL_FLAGS="-I ‘wx-config --prefix‘/share/aclocal"
+./bootstrap
+./configure --with-contrib-plugins=all
+make
+sudo make install
+echo /usr/local/lib | sudo tee -a /etc/ld.so.conf
+sudo ldconfig

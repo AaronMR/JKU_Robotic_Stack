@@ -1,0 +1,22 @@
+#!/bin/bash
+
+cd
+mkdir dev
+cd ~/dev
+git clone git://github.com/AaronMR/JKU_Robotic_Stack.git
+
+export ROS_PACKAGE_PATH=~/dev/JKU_Robotic_Stack:$ROS_PACKAGE_PATH
+echo $ROS_PACKAGE_PATH
+echo "export ROS_PACKAGE_PATH=~/dev/JKU_Robotic_Stack:$ROS_PACKAGE_PATH" >> ~/.bashrc
+echo "" >> ~/.bashrc
+source ~/.bashrc
+
+echo $ROS_PACKAGE_PATH
+
+rosmake R1_Odom
+rosmake R1_teleop_joy
+rosmake R1_teleop_key
+rosmake Laser_PLS200
+codeblocks --build --target="Debug" ~/dev/JKU_Robotic_Stack/Drivers/CB_TCP_RTAI/CB_TCP_RTAI.cbp
+
+echo "End"
