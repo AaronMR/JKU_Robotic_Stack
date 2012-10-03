@@ -1,6 +1,6 @@
 <stack>
   <description brief="JKU_Robotic_Stack">JKU_Robotic_Stack</description>
-  <author>Maintained by aaronmr</author>
+  <author>Maintained by AaronMR</author>
   <license>BSD,LGPL,proprietary</license>  
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/JKU_Robotic_Stack</url>
